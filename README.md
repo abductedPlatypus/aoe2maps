@@ -1,14 +1,6 @@
 # aP's Age of Empires 2 Maps
 Includes 6 maps, 5 for HD (Hourglass is excluded).
-
-## Packing
-
-You can (optionally) pack them with 7zip. E.g.:  
-`` &("C:\Program Files\7-Zip\7z.exe") a -mx0 -tzip "ZR@Marooned.rms" '.\Marooned.rms' .\15001.slp .\15004.slp .\15005.slp .\15008.slp .\15009.slp .\15010.slp .\15011.slp .\15012.slp .\15017.slp
-.\15021.slp .\15022.slp .\15023.slp ``
-
-If you renamed the files from `AwesomeMap.rms` to `AwesomeMap.rms2` they should work in HD too. It will however lack textures and in some cases have weird player placement. Hourglass does not work in HD.
-
+[You can download them here.](https://github.com/abductedPlatypus/aoe2maps/releases) Download included HD versions where applicable.
 
 ## Included Maps
 
@@ -31,7 +23,9 @@ Dolphins? Yes, many roamed the Frisian seas!
 
 **Technical Details:** direct_placement forcing teams to share a single coast. Custom Wad texture.
 
-### ZR@Red Desert
+### ZR@Red Desert  
+<img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/RedDesert1v1.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/RedDesert1v1.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/RedDesert2v2.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/RedDesert2v2.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/RedDesert3v3.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/RedDesert3v3.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/RedDesert4v4.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/RedDesert4v4.png" width="150" height="75" />
+
 The Red Desert (WY) is connected to a large basin, where minerals were left behind after lakes dried up.
 Only wild animals can be found near pools left by the summer rains. However these pools are unable to sustain large forests. Most gold has washed away into the basin, leaving several stone rocks behind.
 You have to get to the low basin for your Wood and Gold, but the lack of buildable ground makes this lower area even harder to defend.
@@ -96,3 +90,12 @@ It's actually surprisingly fun. :O
 **Extra Resources:** A lot of extra gold, stone, relics and wood on the islands.
 
 **Technical Details:** RoR textures added.
+
+## Packing
+If you want to modify the maps you will have to (optionally) repack them with 7zip. E.g.:  
+`` &("C:\Program Files\7-Zip\7z.exe") a -mx0 -tzip "ZR@Marooned.rms" '.\Marooned.rms' .\15001.slp .\15004.slp .\15005.slp .\15008.slp .\15009.slp .\15010.slp .\15011.slp .\15012.slp .\15017.slp
+.\15021.slp .\15022.slp .\15023.slp ``
+
+## HD Compatibility
+
+If you renamed the files from `AwesomeMap.rms` to `AwesomeMap.rms2` they should work in HD too. It will however lack textures and in some cases have weird player placement. Hourglass does not work in HD.
