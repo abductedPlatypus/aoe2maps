@@ -1,0 +1,1725 @@
+/* ****************************** */
+/*            Marooned            */
+/* ****************************** */
+/*   
+    Any comments, changes and suggestions welcomed at 
+    https://github.com/abductedPlatypus/aoe2maps
+    If you make any changes I'd love it if you let me know!
+
+    Version 1.0, 2018-07-22 - Initial Version
+    Version 1.1, 2018-07-23 - Added a bit more land, allowing a bit more expansion. Made outside forests more consistenly campable, made sure the right forest always connects to islands. Decreased chance of outside forests being cut off.
+    Version 1.2, 2018-07-24 -  Split some starting resources and put them inside the walls to reduce laming. Added some center resources to balance early attacks and towers, give the main island more worth.
+
+    @abductypus (Twitter, preferred!)
+    abductedPlatypus (AoEZone, Reddit, Twitch)
+    
+    This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.
+*/
+
+/* ********************************************** */
+
+/* COMMENT TO HIDE */
+#define EYECANDY
+#define BIRDS
+/* #define NERF_SLING */
+
+/* Sling nerfs */
+#const TRIBUTE_INEFFICIENCY 46
+#const BANKING 17
+#const COINAGE 23
+#const COINAGE_IMP_DISABLER 224
+
+
+if 0_TEAM_GAME
+elseif 1_TEAM_GAME
+elseif 2_TEAM_GAME
+elseif 3_TEAM_GAME
+elseif 4_TEAM_GAME
+else
+  #define HD
+endif
+
+
+if HD
+#const MANGROVE_FOREST  55 
+#const MANGROVE_WATER  54 
+#const ISLAND           60  
+#const PLAYER_BASE      60
+#const EXTRA_ISLAND     62 
+#const LAND_FOREST      56
+else
+#const MANGROVE_FOREST  20 
+#const MANGROVE_WATER   11 
+#const ISLAND           0  
+#const PLAYER_BASE      0
+#const EXTRA_ISLAND     5 
+#const LAND_FOREST      17
+endif
+#const FISH_WATER_A     1  
+#const FISH_WATER_B     23 
+
+#const ISLAND_BASE      14
+ 
+#const EXTRA_ISLAND_PATCH 9  
+#const ISLAND_PATCH     12
+
+#const ELEPHANT         936
+#const HUNTABLE         65
+#const CATTLE           1142
+#const PREDATOR         1135
+#const STRAGGLER        414
+
+#const FISH_A           455
+#const FISH_B           450
+#const FISH_SHORE       1141
+
+#const BERRIES          1059
+
+#const BIRD             816
+
+#const GRASS_PATCH      301
+#const FERN_PATCH      1175
+#const JUNGLE_ROCK      1149
+#const JUNGLE_ROCK_B      1148
+#const COAST_PROP_A     1177
+#const COAST_PROP_B     916
+
+<PLAYER_SETUP>
+random_placement
+/*terrain_state 0 0 0 2*/
+if NERF_SLING
+  effect_percent MOD_RESOURCE TRIBUTE_INEFFICIENCY ATTR_SET 40
+  effect_amount DISABLE_TECH BANKING ATTR_DISABLE 17
+  effect_amount DISABLE_TECH COINAGE ATTR_DISABLE 23
+  effect_amount DISABLE_TECH COINAGE_IMP_DISABLER ATTR_DISABLE 224
+endif
+
+<LAND_GENERATION>
+
+base_terrain                        FISH_WATER_A
+
+create_player_lands 
+{ 
+  terrain_type                      PLAYER_BASE
+  number_of_tiles                   30
+  base_size                         8
+  left_border                       27
+  top_border                        27
+  bottom_border                     27
+  right_border                      27
+  other_zone_avoidance_distance     0
+  zone                              0
+}
+
+
+create_land
+{ 
+    terrain_type                      ISLAND_BASE
+    land_percent                      100
+    left_border                       25
+    top_border                        25
+    bottom_border                     25
+    right_border                      25
+    border_fuzziness                  10
+    clumping_factor                   100
+    zone                              0
+}
+
+  create_land
+  {
+    terrain_type EXTRA_ISLAND
+    land_percent 4
+    other_zone_avoidance_distance 4
+    left_border 80
+    bottom_border 15
+    right_border 5
+    top_border 15
+    zone 1
+    land_id 1
+    clumping_factor 50
+  }
+
+  create_land
+  {
+    terrain_type EXTRA_ISLAND
+    land_percent 4
+    other_zone_avoidance_distance 4
+    left_border 80
+    bottom_border 15
+    right_border 5
+    top_border 15
+    zone 2
+    land_id 2
+    clumping_factor 50
+  }
+
+  create_land
+  {
+    terrain_type EXTRA_ISLAND
+    land_percent 4
+    other_zone_avoidance_distance 4
+    left_border 5
+    bottom_border 15
+    right_border 80
+    top_border 15
+    zone 3
+    land_id 3
+    clumping_factor 50
+  }
+
+  create_land
+  {
+    terrain_type EXTRA_ISLAND
+    land_percent 4
+    other_zone_avoidance_distance 4
+    left_border 5
+    bottom_border 15
+    right_border 80
+    top_border 15
+    zone 4
+    land_id 4
+    clumping_factor 50
+  }
+  create_land
+  {
+    terrain_type EXTRA_ISLAND
+    land_percent 4
+    other_zone_avoidance_distance 4
+    left_border 15
+    bottom_border 80
+    right_border 15
+    top_border 5
+    zone 5
+    land_id 5
+    clumping_factor 50
+  }
+
+    create_land
+  {
+    terrain_type EXTRA_ISLAND
+    land_percent 4
+    other_zone_avoidance_distance 4
+    left_border 15
+    bottom_border 80
+    right_border 15
+    top_border 5
+    zone 6
+    land_id 6
+    clumping_factor 50
+  }
+
+  create_land
+  {
+    terrain_type EXTRA_ISLAND
+    land_percent 4
+    other_zone_avoidance_distance 4
+    left_border 15
+    bottom_border 5
+    right_border 15
+    top_border 80
+    zone 7
+    land_id 7
+    clumping_factor 50
+  }
+
+  create_land
+  {
+    terrain_type EXTRA_ISLAND
+    land_percent 4
+    other_zone_avoidance_distance 6
+    left_border 15
+    bottom_border 5
+    right_border 15
+    top_border 80
+    zone 8
+    land_id 8
+    clumping_factor 50
+  }
+
+  create_land
+{ 
+    terrain_type                      MANGROVE_FOREST
+    land_percent                      100
+    base_size                         1
+    land_position                     0 50
+                         
+    left_border                       0
+    top_border                        0
+    right_border                      98
+    bottom_border                     0
+    zone 34
+}
+
+create_land
+{ 
+    terrain_type                      MANGROVE_FOREST
+    land_percent                      100
+    base_size                         1
+    land_position                     50 0
+                         
+    left_border                       0
+    top_border                        0
+    right_border                      0
+    bottom_border                     98
+    zone 35
+}
+
+create_land
+{ 
+    terrain_type                      MANGROVE_FOREST
+    land_percent                      100
+    base_size                         1
+    land_position                     50 99
+                         
+    left_border                       0
+    top_border                        98
+    right_border                      0
+    bottom_border                     0
+    zone 36
+}
+
+create_land
+{ 
+    terrain_type                      MANGROVE_FOREST
+    land_percent                      100
+    base_size                         1
+    land_position                     99  50
+                         
+    left_border                       98
+    top_border                        0
+    right_border                      0
+    bottom_border                     0
+    zone 37
+}
+
+<ELEVATION_GENERATION>
+  <ELEVATION_GENERATION>
+create_elevation 2
+{
+  base_terrain ISLAND_BASE
+  number_of_clumps 10
+  number_of_tiles 200
+  set_scale_by_groups
+  set_scale_by_size
+}
+
+create_elevation 4
+{
+  base_terrain EXTRA_ISLAND
+  number_of_clumps 10
+  number_of_tiles 300
+  set_scale_by_groups
+  set_scale_by_size
+}
+<TERRAIN_GENERATION>
+ 
+create_terrain ISLAND
+{
+    land_percent 100
+    number_of_clumps 8000
+    base_terrain ISLAND_BASE
+    set_scale_by_groups 
+    if TINY_MAP
+    spacing_to_other_terrain_types 5
+    elseif SMALL_MAP
+    spacing_to_other_terrain_types 6
+    elseif MEDIUM_MAP
+    spacing_to_other_terrain_types 8
+    elseif LARGE_MAP
+    spacing_to_other_terrain_types 10
+    elseif HUGE_MAP
+    spacing_to_other_terrain_types 16
+    elseif GIGANTIC_MAP
+    spacing_to_other_terrain_types 20
+    endif
+}
+
+create_terrain FISH_WATER_B
+{
+    number_of_tiles 100000
+    number_of_clumps 1000
+    base_terrain FISH_WATER_A
+    spacing_to_other_terrain_types 4
+}
+
+create_terrain LAND_FOREST
+{
+    number_of_tiles 180
+    number_of_clumps 5
+    base_terrain ISLAND
+    set_scale_by_groups 
+    spacing_to_other_terrain_types 4
+    set_avoid_player_start_areas
+}
+
+create_terrain LAND_FOREST
+{
+    number_of_tiles 220
+    number_of_clumps 8
+    base_terrain EXTRA_ISLAND
+    set_scale_by_groups 
+    spacing_to_other_terrain_types 4
+    set_avoid_player_start_areas
+}
+
+create_terrain ISLAND_PATCH
+{
+    number_of_tiles 220
+    number_of_clumps 24
+    clumping_factor -100
+    base_terrain ISLAND
+    set_scale_by_groups 
+    
+}
+
+
+create_terrain EXTRA_ISLAND_PATCH
+{
+    number_of_tiles 420
+    number_of_clumps 34
+    clumping_factor -100
+    base_terrain EXTRA_ISLAND
+    set_scale_by_groups 
+    
+}
+
+
+<CONNECTION_GENERATION>
+
+
+create_connect_all_lands 
+{
+  replace_terrain FISH_WATER_A          MANGROVE_WATER
+  replace_terrain FISH_WATER_B          MANGROVE_WATER
+  replace_terrain MANGROVE_WATER        MANGROVE_WATER
+  replace_terrain EXTRA_ISLAND          EXTRA_ISLAND
+  replace_terrain ISLAND                ISLAND
+  replace_terrain MANGROVE_FOREST       MANGROVE_WATER
+  
+  terrain_cost    FISH_WATER_A          15
+  terrain_cost    FISH_WATER_B          15
+  terrain_cost    MANGROVE_FOREST       15
+  terrain_cost    MANGROVE_WATER        4
+  terrain_cost    ISLAND                1
+  terrain_cost    EXTRA_ISLAND          1
+
+  terrain_size    ISLAND                1 0
+  terrain_size    EXTRA_ISLAND          1 0
+}
+<OBJECTS_GENERATION>
+create_object TOWN_CENTER
+{
+  set_place_for_every_player
+  group_placement_radius        18
+  min_distance_to_players       0
+  max_distance_to_players       0
+}
+
+create_object VILLAGER
+{
+  set_place_for_every_player
+  min_distance_to_players       4
+  max_distance_to_players       4
+}
+create_object SCOUT
+{
+  number_of_objects             1
+  set_place_for_every_player
+  min_distance_to_players       4
+  max_distance_to_players       4
+}
+
+if REGICIDE
+create_object VILLAGER
+{
+  number_of_objects             7
+  set_place_for_every_player
+  min_distance_to_players       4
+  max_distance_to_players       4
+}
+
+create_object KING
+{
+  set_place_for_every_player
+  min_distance_to_players       4
+  max_distance_to_players       4
+}
+
+endif
+
+create_object PALISADE_WALL
+{
+  set_place_for_every_player
+  min_distance_to_players       8
+  max_distance_to_players       8
+}
+create_object OUTPOST
+{
+  number_of_objects             4
+  set_place_for_every_player
+  min_distance_to_players       8
+  max_distance_to_players       8
+}
+
+create_object RELIC
+{
+  number_of_objects             1
+  number_of_groups              5
+  temp_min_distance_group_placement 15
+  min_distance_to_players  25
+  terrain_to_place_on           EXTRA_ISLAND
+}
+
+
+create_object GOLD
+{
+  number_of_objects             3
+  number_of_groups              1
+  group_placement_radius        3
+  set_tight_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_group_placement  6
+  temp_min_distance_group_placement 6
+  max_distance_to_players       15
+  terrain_to_place_on           ISLAND_BASE
+}
+
+create_object GOLD
+{
+  number_of_objects             3
+  number_of_groups              1
+  group_placement_radius        3
+  set_tight_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_group_placement  4
+  temp_min_distance_group_placement 6
+  min_distance_to_players       7
+  max_distance_to_players       7
+}
+
+create_object STONE
+{
+  number_of_objects             2
+  number_of_groups              1
+  group_placement_radius        3 
+  set_tight_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_group_placement  6
+  temp_min_distance_group_placement 6
+  max_distance_to_players       15
+  terrain_to_place_on           ISLAND_BASE
+}
+
+create_object STONE
+{
+  number_of_objects             3
+  number_of_groups              1
+  group_placement_radius        3
+  set_tight_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_group_placement  4
+  min_distance_to_players       7
+  max_distance_to_players       7
+}
+
+create_object GOLD
+{
+number_of_objects             2
+ if 2_PLAYER_GAME 
+    number_of_groups          2  
+    elseif 3_PLAYER_GAME
+    number_of_groups          2 
+    elseif 4_PLAYER_GAME
+    number_of_groups          3 
+    elseif 5_PLAYER_GAME
+    number_of_groups          3 
+    elseif 6_PLAYER_GAME
+    number_of_groups          4  
+    elseif 7_PLAYER_GAME
+    number_of_groups          4     
+    elseif 8_PLAYER_GAME
+    number_of_groups          5  
+    else
+     if TINY_MAP
+     number_of_groups          2  
+      elseif SMALL_MAP
+      number_of_groups          2 
+      elseif MEDIUM_MAP
+      number_of_groups          3 
+      elseif LARGE_MAP
+      number_of_groups          4 
+      elseif HUGE_MAP
+      number_of_groups          5  
+      else 
+      number_of_groups          8
+      endif
+    endif
+  group_placement_radius        3
+  set_tight_grouping
+  set_gaia_object_only
+  min_distance_group_placement      2
+  temp_min_distance_group_placement 6
+  min_distance_to_players       16
+  terrain_to_place_on           ISLAND
+} 
+
+create_object STONE
+{
+  number_of_objects             2
+ if 2_PLAYER_GAME 
+    number_of_groups          2  
+    elseif 3_PLAYER_GAME
+    number_of_groups          2 
+    elseif 4_PLAYER_GAME
+    number_of_groups          3 
+    elseif 5_PLAYER_GAME
+    number_of_groups          3 
+    elseif 6_PLAYER_GAME
+    number_of_groups          4  
+    elseif 7_PLAYER_GAME
+    number_of_groups          4     
+    elseif 8_PLAYER_GAME
+    number_of_groups          5  
+    else
+     if TINY_MAP
+     number_of_groups          2  
+      elseif SMALL_MAP
+      number_of_groups          2 
+      elseif MEDIUM_MAP
+      number_of_groups          3 
+      elseif LARGE_MAP
+      number_of_groups          4 
+      elseif HUGE_MAP
+      number_of_groups          5  
+      else 
+      number_of_groups          8
+      endif
+    endif
+  group_placement_radius        3
+  set_tight_grouping
+  set_gaia_object_only
+  min_distance_group_placement      2
+  temp_min_distance_group_placement 6
+  min_distance_to_players       16
+  terrain_to_place_on           ISLAND
+}
+
+create_object ELEPHANT
+{
+  number_of_objects             1
+  number_of_groups              1
+  set_place_for_every_player
+  set_gaia_object_only
+  max_distance_to_players       15
+  terrain_to_place_on           ISLAND_BASE
+  group_placement_radius        1
+}
+
+create_object ELEPHANT
+{
+  number_of_objects             1
+  number_of_groups              1
+  set_place_for_every_player
+  set_gaia_object_only
+  max_distance_to_players       9
+  min_distance_to_players       9
+  group_placement_radius        1
+}
+
+create_object CATTLE
+{
+   number_of_objects                5
+   set_loose_grouping
+   set_gaia_object_only
+   set_place_for_every_player
+   min_distance_to_players          4
+   max_distance_to_players          5
+}
+
+/* create_object HUNTABLE
+{
+  number_of_objects                 5
+  group_placement_radius            3
+  number_of_groups                  1
+  set_loose_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  max_distance_to_players       15
+  terrain_to_place_on           ISLAND_BASE
+} */
+
+if BIRDS
+create_object BIRD
+{
+  number_of_objects                 1
+  number_of_groups                  4 
+  set_gaia_object_only
+  set_scaling_to_map_size
+  temp_min_distance_group_placement 24
+}
+endif
+
+if EYECANDY
+    if GRASS_PATCH
+        create_object GRASS_PATCH
+        {
+          number_of_objects                 1
+          number_of_groups                  5
+          set_scaling_to_map_size
+          temp_min_distance_group_placement 6
+          terrain_to_place_on               ISLAND
+        }
+    endif
+
+    if FERN_PATCH
+        create_object FERN_PATCH
+        {
+          number_of_objects                 1
+          number_of_groups                  12
+          temp_min_distance_group_placement 12
+          set_scaling_to_map_size
+          terrain_to_place_on               EXTRA_ISLAND
+        }
+    endif
+
+  if JUNGLE_ROCK
+        create_object JUNGLE_ROCK
+        {
+          number_of_objects                 1
+          number_of_groups                  12
+          temp_min_distance_group_placement 17
+          set_scaling_to_map_size
+          terrain_to_place_on               EXTRA_ISLAND
+        }
+    endif
+
+  if JUNGLE_ROCK_B
+        create_object JUNGLE_ROCK_B
+        {
+          number_of_objects                 1
+          number_of_groups                  6
+          temp_min_distance_group_placement 17
+          set_scaling_to_map_size
+          terrain_to_place_on               FISH_WATER_A
+        }
+    endif
+
+      if COAST_PROP_A
+        create_object COAST_PROP_A
+        {
+          number_of_objects                 1
+          number_of_groups                  12
+          temp_min_distance_group_placement 17
+          set_scaling_to_map_size
+          terrain_to_place_on               ISLAND_BASE
+        }
+    endif
+
+    if COAST_PROP_B
+        create_object COAST_PROP_B
+        {
+          number_of_objects                 1
+          number_of_groups                  12
+          temp_min_distance_group_placement 17
+          set_scaling_to_map_size
+          terrain_to_place_on               ISLAND_BASE
+        }
+    endif
+
+endif
+
+
+create_object STRAGGLER
+{
+number_of_objects 2
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 4
+max_distance_to_players 5
+min_distance_group_placement 2
+}
+
+create_object STRAGGLER
+{
+number_of_objects 3
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 6
+max_distance_to_players 8
+min_distance_group_placement 2
+}
+
+create_object BERRIES
+{
+  number_of_objects             6
+  number_of_groups              1
+  set_tight_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_group_placement 4
+  temp_min_distance_group_placement 6
+  min_distance_to_players       6
+  max_distance_to_players       7
+}
+
+create_object PREDATOR
+{
+  number_of_objects             1
+  number_of_groups              6
+  set_tight_grouping
+  set_scaling_to_map_size
+  min_distance_to_players       25
+  temp_min_distance_group_placement 25
+}
+
+create_object FISH_A
+{
+    number_of_groups          32  
+    temp_min_distance_group_placement 4   
+    min_distance_group_placement    4      
+    set_scaling_to_map_size
+    terrain_to_place_on    FISH_WATER_A
+}
+
+create_object FISH_B
+{
+    number_of_groups          32  
+    temp_min_distance_group_placement 7   
+    min_distance_group_placement    4        
+    set_scaling_to_map_size
+    terrain_to_place_on    FISH_WATER_B
+    min_distance_group_placement 3
+}
+
+create_object FISH_SHORE
+{
+    number_of_groups          28  
+    number_of_objects         2
+    temp_min_distance_group_placement 7         
+    set_scaling_to_map_size
+    min_distance_group_placement 3
+}
+
+create_object HUNTABLE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         4  
+    elseif 3_PLAYER_GAME
+    number_of_objects         5 
+    elseif 4_PLAYER_GAME
+    number_of_objects         6 
+    elseif 5_PLAYER_GAME
+    number_of_objects         7 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         7     
+    elseif 8_PLAYER_GAME
+    number_of_objects         7  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 1
+    number_of_groups         1
+    set_tight_grouping
+}
+
+create_object GOLD
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         3  
+    elseif 3_PLAYER_GAME
+    number_of_objects         4 
+    elseif 4_PLAYER_GAME
+    number_of_objects         5 
+    elseif 5_PLAYER_GAME
+    number_of_objects         6 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         8     
+    elseif 8_PLAYER_GAME
+    number_of_objects         9  
+    else
+     if TINY_MAP
+      number_of_objects          3  
+      elseif SMALL_MAP
+      number_of_objects          4 
+      elseif MEDIUM_MAP
+      number_of_objects          5 
+      elseif LARGE_MAP
+      number_of_objects          6 
+      elseif HUGE_MAP
+      number_of_objects          8  
+      else 
+      number_of_objects          9
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 1
+    number_of_groups         2
+    set_tight_grouping
+}
+
+create_object STONE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         2  
+    elseif 3_PLAYER_GAME
+    number_of_objects         3 
+    elseif 4_PLAYER_GAME
+    number_of_objects         3 
+    elseif 5_PLAYER_GAME
+    number_of_objects         4 
+    elseif 6_PLAYER_GAME
+    number_of_objects         4  
+    elseif 7_PLAYER_GAME
+    number_of_objects         5     
+    elseif 8_PLAYER_GAME
+    number_of_objects         5  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    min_distance_group_placement 3
+    place_on_specific_land_id 1
+    number_of_groups         2
+    set_tight_grouping
+}
+
+create_object HUNTABLE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         4  
+    elseif 3_PLAYER_GAME
+    number_of_objects         5 
+    elseif 4_PLAYER_GAME
+    number_of_objects         6 
+    elseif 5_PLAYER_GAME
+    number_of_objects         7 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         7     
+    elseif 8_PLAYER_GAME
+    number_of_objects         7  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 2
+    number_of_groups         1
+    set_tight_grouping
+}
+
+create_object GOLD
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         3  
+    elseif 3_PLAYER_GAME
+    number_of_objects         4 
+    elseif 4_PLAYER_GAME
+    number_of_objects         5 
+    elseif 5_PLAYER_GAME
+    number_of_objects         6 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         8     
+    elseif 8_PLAYER_GAME
+    number_of_objects         9  
+    else
+     if TINY_MAP
+      number_of_objects          3  
+      elseif SMALL_MAP
+      number_of_objects          4 
+      elseif MEDIUM_MAP
+      number_of_objects          5 
+      elseif LARGE_MAP
+      number_of_objects          6 
+      elseif HUGE_MAP
+      number_of_objects          8  
+      else 
+      number_of_objects          9
+      endif
+    endif
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 2
+    set_tight_grouping
+}
+
+create_object STONE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         2  
+    elseif 3_PLAYER_GAME
+    number_of_objects         3 
+    elseif 4_PLAYER_GAME
+    number_of_objects         3 
+    elseif 5_PLAYER_GAME
+    number_of_objects         4 
+    elseif 6_PLAYER_GAME
+    number_of_objects         4  
+    elseif 7_PLAYER_GAME
+    number_of_objects         5     
+    elseif 8_PLAYER_GAME
+    number_of_objects         5  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 2
+    set_tight_grouping
+}
+
+create_object HUNTABLE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         4  
+    elseif 3_PLAYER_GAME
+    number_of_objects         5 
+    elseif 4_PLAYER_GAME
+    number_of_objects         6 
+    elseif 5_PLAYER_GAME
+    number_of_objects         7 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         7     
+    elseif 8_PLAYER_GAME
+    number_of_objects         7  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 3
+    number_of_groups         1
+    set_tight_grouping
+}
+
+create_object GOLD
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         3  
+    elseif 3_PLAYER_GAME
+    number_of_objects         4 
+    elseif 4_PLAYER_GAME
+    number_of_objects         5 
+    elseif 5_PLAYER_GAME
+    number_of_objects         6 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         8     
+    elseif 8_PLAYER_GAME
+    number_of_objects         9  
+    else
+     if TINY_MAP
+      number_of_objects          3  
+      elseif SMALL_MAP
+      number_of_objects          4 
+      elseif MEDIUM_MAP
+      number_of_objects          5 
+      elseif LARGE_MAP
+      number_of_objects          6 
+      elseif HUGE_MAP
+      number_of_objects          8  
+      else 
+      number_of_objects          9
+      endif
+    endif
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 3
+    number_of_groups         2
+    set_tight_grouping
+}
+
+create_object STONE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         2  
+    elseif 3_PLAYER_GAME
+    number_of_objects         3 
+    elseif 4_PLAYER_GAME
+    number_of_objects         3 
+    elseif 5_PLAYER_GAME
+    number_of_objects         4 
+    elseif 6_PLAYER_GAME
+    number_of_objects         4  
+    elseif 7_PLAYER_GAME
+    number_of_objects         5     
+    elseif 8_PLAYER_GAME
+    number_of_objects         5  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 3
+    number_of_groups         2
+    set_tight_grouping
+}
+
+create_object HUNTABLE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         4  
+    elseif 3_PLAYER_GAME
+    number_of_objects         5 
+    elseif 4_PLAYER_GAME
+    number_of_objects         6 
+    elseif 5_PLAYER_GAME
+    number_of_objects         7 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         7     
+    elseif 8_PLAYER_GAME
+    number_of_objects         7  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 4
+    number_of_groups         1
+    set_tight_grouping
+}
+
+create_object GOLD
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         3  
+    elseif 3_PLAYER_GAME
+    number_of_objects         4 
+    elseif 4_PLAYER_GAME
+    number_of_objects         5 
+    elseif 5_PLAYER_GAME
+    number_of_objects         6 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         8     
+    elseif 8_PLAYER_GAME
+    number_of_objects         9  
+    else
+     if TINY_MAP
+      number_of_objects          3  
+      elseif SMALL_MAP
+      number_of_objects          4 
+      elseif MEDIUM_MAP
+      number_of_objects          5 
+      elseif LARGE_MAP
+      number_of_objects          6 
+      elseif HUGE_MAP
+      number_of_objects          8  
+      else 
+      number_of_objects          9
+      endif
+    endif
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 4
+    set_tight_grouping
+}
+
+create_object STONE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         2  
+    elseif 3_PLAYER_GAME
+    number_of_objects         3 
+    elseif 4_PLAYER_GAME
+    number_of_objects         3 
+    elseif 5_PLAYER_GAME
+    number_of_objects         4 
+    elseif 6_PLAYER_GAME
+    number_of_objects         4  
+    elseif 7_PLAYER_GAME
+    number_of_objects         5     
+    elseif 8_PLAYER_GAME
+    number_of_objects         5  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 4
+    set_tight_grouping
+}
+
+create_object HUNTABLE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         4  
+    elseif 3_PLAYER_GAME
+    number_of_objects         5 
+    elseif 4_PLAYER_GAME
+    number_of_objects         6 
+    elseif 5_PLAYER_GAME
+    number_of_objects         7 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         7     
+    elseif 8_PLAYER_GAME
+    number_of_objects         7  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 5
+    number_of_groups         1
+    set_tight_grouping
+}
+
+create_object GOLD
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         3  
+    elseif 3_PLAYER_GAME
+    number_of_objects         4 
+    elseif 4_PLAYER_GAME
+    number_of_objects         5 
+    elseif 5_PLAYER_GAME
+    number_of_objects         6 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         8     
+    elseif 8_PLAYER_GAME
+    number_of_objects         9  
+    else
+     if TINY_MAP
+      number_of_objects          3  
+      elseif SMALL_MAP
+      number_of_objects          4 
+      elseif MEDIUM_MAP
+      number_of_objects          5 
+      elseif LARGE_MAP
+      number_of_objects          6 
+      elseif HUGE_MAP
+      number_of_objects          8  
+      else 
+      number_of_objects          9
+      endif
+    endif
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 5
+    number_of_groups         2
+    set_tight_grouping
+}
+
+create_object STONE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         2  
+    elseif 3_PLAYER_GAME
+    number_of_objects         3 
+    elseif 4_PLAYER_GAME
+    number_of_objects         3 
+    elseif 5_PLAYER_GAME
+    number_of_objects         4 
+    elseif 6_PLAYER_GAME
+    number_of_objects         4  
+    elseif 7_PLAYER_GAME
+    number_of_objects         5     
+    elseif 8_PLAYER_GAME
+    number_of_objects         5  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 5
+    number_of_groups         2
+    set_tight_grouping
+}
+
+create_object HUNTABLE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         4  
+    elseif 3_PLAYER_GAME
+    number_of_objects         5 
+    elseif 4_PLAYER_GAME
+    number_of_objects         6 
+    elseif 5_PLAYER_GAME
+    number_of_objects         7 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         7     
+    elseif 8_PLAYER_GAME
+    number_of_objects         7  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 6
+    number_of_groups         1
+    set_tight_grouping
+}
+
+create_object GOLD
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         3  
+    elseif 3_PLAYER_GAME
+    number_of_objects         4 
+    elseif 4_PLAYER_GAME
+    number_of_objects         5 
+    elseif 5_PLAYER_GAME
+    number_of_objects         6 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         8     
+    elseif 8_PLAYER_GAME
+    number_of_objects         9  
+    else
+     if TINY_MAP
+      number_of_objects          3  
+      elseif SMALL_MAP
+      number_of_objects          4 
+      elseif MEDIUM_MAP
+      number_of_objects          5 
+      elseif LARGE_MAP
+      number_of_objects          6 
+      elseif HUGE_MAP
+      number_of_objects          8  
+      else 
+      number_of_objects          9
+      endif
+    endif
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 6
+    set_tight_grouping
+}
+
+create_object STONE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         2  
+    elseif 3_PLAYER_GAME
+    number_of_objects         3 
+    elseif 4_PLAYER_GAME
+    number_of_objects         3 
+    elseif 5_PLAYER_GAME
+    number_of_objects         4 
+    elseif 6_PLAYER_GAME
+    number_of_objects         4  
+    elseif 7_PLAYER_GAME
+    number_of_objects         5     
+    elseif 8_PLAYER_GAME
+    number_of_objects         5  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 6
+    set_tight_grouping
+}
+
+create_object HUNTABLE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         4  
+    elseif 3_PLAYER_GAME
+    number_of_objects         5 
+    elseif 4_PLAYER_GAME
+    number_of_objects         6 
+    elseif 5_PLAYER_GAME
+    number_of_objects         7 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         7     
+    elseif 8_PLAYER_GAME
+    number_of_objects         7  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 7
+    number_of_groups         1
+    set_tight_grouping
+}
+
+create_object GOLD
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         3  
+    elseif 3_PLAYER_GAME
+    number_of_objects         4 
+    elseif 4_PLAYER_GAME
+    number_of_objects         5 
+    elseif 5_PLAYER_GAME
+    number_of_objects         6 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         8     
+    elseif 8_PLAYER_GAME
+    number_of_objects         9  
+    else
+     if TINY_MAP
+      number_of_objects          3  
+      elseif SMALL_MAP
+      number_of_objects          4 
+      elseif MEDIUM_MAP
+      number_of_objects          5 
+      elseif LARGE_MAP
+      number_of_objects          6 
+      elseif HUGE_MAP
+      number_of_objects          8  
+      else 
+      number_of_objects          9
+      endif
+    endif
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 7
+    number_of_groups         2
+    set_tight_grouping
+}
+
+create_object STONE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         2  
+    elseif 3_PLAYER_GAME
+    number_of_objects         3 
+    elseif 4_PLAYER_GAME
+    number_of_objects         3 
+    elseif 5_PLAYER_GAME
+    number_of_objects         4 
+    elseif 6_PLAYER_GAME
+    number_of_objects         4  
+    elseif 7_PLAYER_GAME
+    number_of_objects         5     
+    elseif 8_PLAYER_GAME
+    number_of_objects         5  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 7
+    number_of_groups         2
+    set_tight_grouping
+}
+
+create_object HUNTABLE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         4  
+    elseif 3_PLAYER_GAME
+    number_of_objects         5 
+    elseif 4_PLAYER_GAME
+    number_of_objects         6 
+    elseif 5_PLAYER_GAME
+    number_of_objects         7 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         7     
+    elseif 8_PLAYER_GAME
+    number_of_objects         7  
+    else
+     if TINY_MAP
+      number_of_objects          4  
+      elseif SMALL_MAP
+      number_of_objects          5 
+      elseif MEDIUM_MAP
+      number_of_objects          6 
+      elseif LARGE_MAP
+      number_of_objects          7 
+      elseif HUGE_MAP
+      number_of_objects          7  
+      else 
+      number_of_objects          7
+      endif
+    endif
+    max_distance_to_other_zones 4
+    min_distance_group_placement 3
+    place_on_specific_land_id 8
+    number_of_groups         1
+    set_tight_grouping
+}
+
+create_object GOLD
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         3  
+    elseif 3_PLAYER_GAME
+    number_of_objects         4 
+    elseif 4_PLAYER_GAME
+    number_of_objects         5 
+    elseif 5_PLAYER_GAME
+    number_of_objects         6 
+    elseif 6_PLAYER_GAME
+    number_of_objects         7  
+    elseif 7_PLAYER_GAME
+    number_of_objects         8     
+    elseif 8_PLAYER_GAME
+    number_of_objects         9  
+    else
+     if TINY_MAP
+      number_of_objects          3  
+      elseif SMALL_MAP
+      number_of_objects          4 
+      elseif MEDIUM_MAP
+      number_of_objects          5 
+      elseif LARGE_MAP
+      number_of_objects          6 
+      elseif HUGE_MAP
+      number_of_objects          8  
+      else 
+      number_of_objects          9
+      endif
+    endif
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 8
+    set_tight_grouping
+}
+
+create_object STONE
+{
+    if 2_PLAYER_GAME 
+    number_of_objects         2  
+    elseif 3_PLAYER_GAME
+    number_of_objects         3 
+    elseif 4_PLAYER_GAME
+    number_of_objects         3 
+    elseif 5_PLAYER_GAME
+    number_of_objects         4 
+    elseif 6_PLAYER_GAME
+    number_of_objects         4  
+    elseif 7_PLAYER_GAME
+    number_of_objects         5     
+    elseif 8_PLAYER_GAME
+    number_of_objects         5  
+    else
+     if TINY_MAP
+      number_of_objects          2  
+      elseif SMALL_MAP
+      number_of_objects          3 
+      elseif MEDIUM_MAP
+      number_of_objects          3 
+      elseif LARGE_MAP
+      number_of_objects          4 
+      elseif HUGE_MAP
+      number_of_objects          5  
+      else 
+      number_of_objects          5
+      endif
+    endif
+    max_distance_to_other_zones 4
+    
+    min_distance_group_placement 3
+    place_on_specific_land_id 8
+    set_tight_grouping
+}
+

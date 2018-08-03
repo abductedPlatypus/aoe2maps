@@ -1,0 +1,1260 @@
+/* ****************************** */
+/*           Hourglass            */
+/* ****************************** */
+/*
+
+    Version 1.0, 2018-07-06
+    Version 1.1, 2018-07-06 - Added some extra randomness to land placement
+    Version 1.2  2018-07-13 - Reduced forward playeer randomness for a better defensible position
+
+    Any comments, changes and suggestions welcomed at 
+    https://github.com/abductedPlatypus/aoe2maps
+    If you make any changes I'd love it if you let me know!
+
+    @abductypus (Twitter, preferred!)
+    abductedPlatypus (AoEZone, Reddit, Twitch)
+
+    This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.
+*/
+
+/* ********************************************** */
+
+/* Sling nerfs */
+#const TRIBUTE_INEFFICIENCY 46
+#const BANKING 17
+#const COINAGE 23
+#const COINAGE_IMP_DISABLER 224
+
+/* COMMENT TO HIDE */
+#define EYECANDY
+#define BIRDS
+/* #define NERF_SLING       */
+
+/* *************** */
+
+
+/* ******* */
+/* Palette */
+/* ******* */
+
+/* Land Types */
+#const PLAYER_BASE 14
+#const POOL 1
+#const EXTRA_RESOURCE 27
+#const EXTRA_RESOURCE_PATCH 0
+#const NO_BUILD 40
+#const FOREST_BASE 9
+#const MAIN_FOREST 41
+#const OUTSIDE_FOREST 13
+#const MAIN_LAND   6
+#const PLAYER_LAND   6
+#const POOL_PATCH  3
+#const HOURGLASS   14
+#const HOURGLASS_PATCH  6
+#const BACK_LINE   12
+#const SECONDARY_LAND_PATCH 9  
+
+#const DETAIL_A 1091
+#const DETAIL_B 723
+#const DETAIL_C 1095
+#const FISH_A 53
+#const CATTLE 594
+#const LURABLE 48
+#const PREDATOR 126
+#const BERRIES 59
+#const HUNTABLE 65
+#const BIRD 96
+
+
+/* Two even teams? */
+if 2_PLAYER_GAME
+  start_random
+  percent_chance 17
+    #define 1_DIAGONAL_A
+  percent_chance 17
+    #define 1_DIAGONAL_B
+  percent_chance 0
+    #define 1_SAME_SIDE_A
+  percent_chance 0
+    #define 1_SAME_SIDE_B
+  percent_chance 17
+    #define 1_CLOSE
+  percent_chance 16
+    #define 1_FAR 
+  percent_chance 16
+    #define 1_LINE_A
+  percent_chance 17
+    #define 1_LINE_B  
+  end_random
+elseif 4_PLAYER_GAME
+  if 0_TEAM_GAME
+  #define UNBALANCED
+  elseif 1_TEAM_GAME
+  #define UNBALANCED
+  elseif 3_TEAM_GAME
+  #define UNBALANCED
+  elseif 4_TEAM_GAME
+  #define UNBALANCED
+  else
+    start_random
+    percent_chance 20
+      #define 2_C_A
+    percent_chance 20
+      #define 2_C_B
+    percent_chance 20
+      #define 2_DIAGONAL_A
+    percent_chance 20
+      #define 2_DIAGONAL_B
+    percent_chance 20
+      #define 2_I
+    percent_chance 0
+      #define 2_WIDE
+    end_random
+  endif
+elseif 6_PLAYER_GAME
+  if 0_TEAM_GAME
+  #define UNBALANCED
+  elseif 1_TEAM_GAME
+  #define UNBALANCED
+  elseif 3_TEAM_GAME
+  #define UNBALANCED
+  elseif 4_TEAM_GAME
+  #define UNBALANCED
+  else
+    start_random
+    percent_chance 100
+      #define 3_FOWARD
+    percent_chance 0
+      #define 3_BACKWARD
+    end_random
+  endif
+elseif 8_PLAYER_GAME
+  if 0_TEAM_GAME
+  #define UNBALANCED
+  elseif 1_TEAM_GAME
+  #define UNBALANCED
+  elseif 3_TEAM_GAME
+  #define UNBALANCED
+  elseif 4_TEAM_GAME
+  #define UNBALANCED
+  else
+    #define 4_FULL
+  endif
+elseif 3_PLAYER_GAME
+#define UNBALANCED
+elseif 5_PLAYER_GAME
+#define UNBALANCED
+elseif 7_PLAYER_GAME
+#define UNBALANCED
+else 
+#define UNBALANCED
+endif
+
+start_random
+percent_chance 50
+#define VERTICAL
+percent_chance 50
+#define HORIZONTAL
+end_random
+if UNBALANCED
+elseif 2_PLAYER_GAME
+else
+  start_random
+    percent_chance 50
+    #define AB
+    percent_chance 50
+    #define BA
+  end_random
+endif
+
+/* **************************************** */
+
+<PLAYER_SETUP>
+  direct_placement
+
+  ai_info_map_type ARABIA 0 0 0
+
+  if NERF_SLING
+  effect_percent MOD_RESOURCE TRIBUTE_INEFFICIENCY ATTR_SET 40
+  effect_amount DISABLE_TECH BANKING ATTR_DISABLE 17
+  effect_amount DISABLE_TECH COINAGE ATTR_DISABLE 23
+  effect_amount DISABLE_TECH COINAGE_IMP_DISABLER ATTR_DISABLE 224
+  endif
+
+<LAND_GENERATION>
+
+/* if UNBALANCED
+  base_terrain                          WATER
+else */
+  base_terrain                          MAIN_LAND
+/* endif */
+
+/* create_player_lands  
+{
+  terrain_type MAIN_LAND
+  land_percent 0
+  left_border 10
+  bottom_border 10
+  right_border 10
+  top_border 10
+} */
+
+create_land
+{ 
+    terrain_type                      NO_BUILD
+    land_percent                      100
+    base_size                         1
+    if HORIZONTAL
+    land_position                     50 30
+                         
+    left_border                       rnd(20,35)   
+    top_border                        10
+    right_border                      rnd(20,35)   
+    bottom_border                     rnd(52,56)   
+    else
+    land_position                     30 50
+                         
+    left_border                       10   
+    top_border                        rnd(20,35)
+    right_border                      rnd(52,56)   
+    bottom_border                     rnd(20,35)   
+    endif
+
+    border_fuzziness                  10
+} 
+
+create_land 
+{ 
+    terrain_type                      NO_BUILD
+    land_percent                      100
+    base_size                         1
+    if HORIZONTAL
+    land_position                     50 70
+                         
+    left_border                       rnd(20,35)   
+    top_border                        rnd(52,56)   
+    right_border                      rnd(20,35)   
+    bottom_border                     10
+    else
+    land_position                     70 50
+                         
+    left_border                       rnd(52,56)   
+    top_border                        rnd(20,35)
+    right_border                      10   
+    bottom_border                     rnd(20,35)   
+    endif
+
+    border_fuzziness                  10
+} 
+
+create_land
+{ 
+    terrain_type                      OUTSIDE_FOREST
+    land_percent                      100
+    base_size                         1
+    land_position                     0 50
+                         
+    left_border                       0
+    top_border                        0
+    right_border                      99
+    bottom_border                     0
+}
+
+create_land
+{ 
+    terrain_type                      OUTSIDE_FOREST
+    land_percent                      100
+    base_size                         1
+    land_position                     50 0
+                         
+    left_border                       0
+    top_border                        0
+    right_border                      0
+    bottom_border                     99
+}
+
+create_land
+{ 
+    terrain_type                      OUTSIDE_FOREST
+    land_percent                      100
+    base_size                         1
+    land_position                     50 99
+                         
+    left_border                       0
+    top_border                        99
+    right_border                      0
+    bottom_border                     0
+}
+
+create_land
+{ 
+    terrain_type                      OUTSIDE_FOREST
+    land_percent                      100
+    base_size                         1
+    land_position                     100  50
+                         
+    left_border                       99
+    top_border                        0
+    right_border                      0
+    bottom_border                     0
+}
+
+create_land
+{ 
+    terrain_type                      EXTRA_RESOURCE
+    number_of_tiles                   100
+    base_size                         1
+    if HORIZONTAL
+    land_position                     50 5
+                         
+    left_border                       37
+    top_border                        5
+    right_border                      37
+    bottom_border                     90
+    else
+    land_position                     5 50
+                         
+    left_border                       5   
+    top_border                        37
+    right_border                      90   
+    bottom_border                     37   
+    endif
+    border_fuzziness                  100
+    other_zone_avoidance_distance     0
+}
+
+create_land
+{ 
+    terrain_type                      EXTRA_RESOURCE
+    number_of_tiles                   100
+    base_size                         1
+    if HORIZONTAL
+    land_position                     50 95 
+                         
+    left_border                       37
+    top_border                        90
+    right_border                      37
+    bottom_border                     5
+    else
+    land_position                     95 50
+                         
+    left_border                       90   
+    top_border                        37
+    right_border                      5   
+    bottom_border                     37   
+    endif
+    border_fuzziness                  100
+    other_zone_avoidance_distance     0
+}
+
+create_land
+{ 
+    terrain_type                      OUTSIDE_FOREST
+    land_percent                      100
+    base_size                         1
+    land_position                     0  0
+                         
+    left_border                       0
+    top_border                        0
+    right_border                      94
+    bottom_border                     94
+}
+
+create_land
+{ 
+    terrain_type                      OUTSIDE_FOREST
+    land_percent                      100
+    base_size                         1
+    land_position                     100  0
+                         
+    left_border                       94
+    top_border                        0
+    right_border                      0
+    bottom_border                     94
+}
+
+create_land
+{ 
+    terrain_type                      OUTSIDE_FOREST
+    land_percent                      100
+    base_size                         1
+    land_position                     100  99
+                         
+    left_border                       94
+    top_border                        94
+    right_border                      0
+    bottom_border                     0
+}
+
+create_land
+{ 
+    terrain_type                      OUTSIDE_FOREST
+    land_percent                      100
+    base_size                         1
+    land_position                     0  99
+                         
+    left_border                       0
+    top_border                        94
+    right_border                      94
+    bottom_border                     0
+}
+
+create_land
+{ 
+    terrain_type                      BACK_LINE
+    land_percent                      25
+    base_size                         1
+    if HORIZONTAL
+    land_position                     93  50
+                         
+    left_border                       90
+    top_border                        25
+    right_border                      5
+    bottom_border                     25
+    else
+    land_position                     50 93
+                         
+    left_border                       25   
+    top_border                        90
+    right_border                      25   
+    bottom_border                     5   
+    endif
+    zone                              5
+}
+
+create_land
+{ 
+    terrain_type                      HOURGLASS
+    land_percent                      25
+    base_size                         1
+    if HORIZONTAL
+    land_position                     80  50
+                         
+    left_border                       66
+    top_border                        35
+    right_border                      10
+    bottom_border                     35
+    else
+    land_position                     50 80
+                         
+    left_border                       35   
+    top_border                        66
+    right_border                      35   
+    bottom_border                     10   
+    endif
+    zone                              5
+}
+
+create_land
+{ 
+    terrain_type                      HOURGLASS
+    land_percent                      25
+    base_size                         1
+    if HORIZONTAL
+    land_position                     20  50
+                         
+    left_border                       10
+    top_border                        35
+    right_border                      66
+    bottom_border                     35
+        else
+    land_position                     50 20
+                         
+    left_border                       35   
+    top_border                        10
+    right_border                      35   
+    bottom_border                     66   
+    endif
+    zone                              5
+}
+
+create_land
+{ 
+    terrain_type                      HOURGLASS
+    land_percent                      25
+    base_size                         1
+    if HORIZONTAL
+    land_position                     50  50
+                         
+    left_border                       34
+    top_border                        47
+    right_border                      34
+    bottom_border                     47
+        else
+    land_position                     50 50
+                         
+    left_border                       47   
+    top_border                        34
+    right_border                      47   
+    bottom_border                     34   
+    endif
+    zone                              5
+}
+
+create_land
+{ 
+    terrain_type                      BACK_LINE
+    land_percent                      25
+    base_size                         1
+    if HORIZONTAL
+    land_position                     7  50
+                         
+    left_border                       5
+    top_border                        25
+    right_border                      90
+    bottom_border                     25
+        else
+    land_position                     50 7
+                         
+    left_border                       25   
+    top_border                        5
+    right_border                      25   
+    bottom_border                     90   
+    endif
+    zone                              5
+}
+
+if 1_PLAYER_GAME
+elseif 2_PLAYER_GAME
+else
+create_land
+{ 
+    terrain_type                      OUTSIDE_FOREST
+    number_of_tiles                   100
+    base_size                         1
+    if HORIZONTAL
+    land_position                     23 50
+    left_border                       18
+    top_border                        45
+    right_border                      72
+    bottom_border                     45  
+        else
+    land_position                     50 23
+                         
+    left_border                       45   
+    top_border                        18
+    right_border                      45   
+    bottom_border                     72   
+    endif             
+}
+
+create_land
+{ 
+    terrain_type                      OUTSIDE_FOREST
+    number_of_tiles                   100
+    base_size                         1
+    if HORIZONTAL
+    land_position                     77 50
+    left_border                       72
+    top_border                        45
+    right_border                      18
+    bottom_border                     45  
+        else
+    land_position                     50 77
+                         
+    left_border                       45   
+    top_border                        72
+    right_border                      45   
+    bottom_border                     18   
+    endif                    
+}
+endif
+
+/* Forward Player */
+
+if 1_DIAGONAL_A
+elseif 1_DIAGONAL_B
+elseif 1_SAME_SIDE_A
+elseif 1_SAME_SIDE_B
+elseif 1_FAR
+elseif 1_LINE_A
+elseif 1_LINE_B
+elseif 2_WIDE
+elseif 3_BACKWARD
+else
+create_land
+{ 
+    terrain_type                      PLAYER_LAND
+    number_of_tiles                   1
+    if HORIZONTAL
+    land_position                     67 50
+    else
+    land_position                     50 67
+    endif   
+    if AB
+    assign_to                         AT_TEAM 1 0 0       
+    elseif BA
+    assign_to                         AT_TEAM 2 0 0 
+    else
+    assign_to                         AT_TEAM -10 0 0 
+    endif 
+
+}
+
+create_land
+{ 
+    terrain_type                      PLAYER_LAND
+    number_of_tiles                   1
+    if HORIZONTAL
+    land_position                     33 50
+    else
+    land_position                     50 33
+    endif       
+    if AB
+    assign_to                         AT_TEAM 2 0 0       
+    elseif BA
+    assign_to                         AT_TEAM 1 0 0 
+    else
+    assign_to                         AT_TEAM -10 0 0 
+    endif                   
+}
+endif
+
+/* Backward Player  */
+if 1_CLOSE
+elseif 1_SAME_SIDE_A
+elseif 1_SAME_SIDE_B
+elseif 1_DIAGONAL_A
+elseif 1_DIAGONAL_B
+elseif 1_LINE_A
+elseif 1_LINE_B
+elseif 2_DIAGONAL_A
+elseif 2_DIAGONAL_B
+elseif 2_C_A
+elseif 2_C_B
+elseif 2_WIDE
+elseif 3_FOWARD
+else
+create_land
+{ 
+    terrain_type                      PLAYER_LAND
+    number_of_tiles                   1
+    if HORIZONTAL
+    land_position                     rnd(85,88) rnd(45,55)
+    else
+    land_position                     rnd(45,55) rnd(85,88)
+    endif                         
+    if AB
+    assign_to                         AT_TEAM 1 0 0       
+    elseif BA
+    assign_to                         AT_TEAM 2 0 0 
+    else
+    assign_to                         AT_TEAM -10 0 0 
+    endif   
+}
+
+create_land
+{ 
+    terrain_type                      PLAYER_LAND
+    number_of_tiles                   1
+    if HORIZONTAL
+    land_position                     rnd(12,15) rnd(45,55) 
+    else
+    land_position                     rnd(45,55) rnd(12,15)
+    endif                     
+    if AB
+    assign_to                         AT_TEAM 2 0 0       
+    elseif BA
+    assign_to                         AT_TEAM 1 0 0 
+    else
+    assign_to                         AT_TEAM -10 0 0 
+    endif   
+}
+endif
+/* Side Players */
+
+if 1_CLOSE
+elseif 1_SAME_SIDE_A
+elseif 1_DIAGONAL_A
+elseif 1_FAR
+elseif 1_LINE_A
+elseif 2_C_A
+elseif 2_I
+elseif 2_DIAGONAL_A
+else
+create_land
+{ 
+    terrain_type                      PLAYER_LAND
+    number_of_tiles                   1                     
+    if HORIZONTAL
+    land_position                     rnd(80,85) rnd(75,85)
+    else
+    land_position                     rnd(75,85) rnd(80,85)
+    endif                    
+    if AB
+    assign_to                         AT_TEAM 1 0 0       
+    elseif BA
+    assign_to                         AT_TEAM 2 0 0 
+    else
+    assign_to                         AT_TEAM -10 0 0 
+    endif   
+}
+endif
+
+if 1_CLOSE
+elseif 1_SAME_SIDE_B
+elseif 1_DIAGONAL_B
+elseif 1_FAR
+elseif 1_LINE_A
+elseif 2_C_A
+elseif 2_I
+elseif 2_DIAGONAL_B
+else
+create_land
+{ 
+    terrain_type                      PLAYER_LAND
+    number_of_tiles                   1
+  
+    if HORIZONTAL
+    land_position                     rnd(15,20) rnd(75,85)
+    else
+    land_position                     rnd(75,85) rnd(15,20)
+    endif                       
+    if AB
+    assign_to                         AT_TEAM 2 0 0       
+    elseif BA
+    assign_to                         AT_TEAM 1 0 0 
+    else
+    assign_to                         AT_TEAM -10 0 0 
+    endif    
+}
+endif
+
+if 1_CLOSE
+elseif 1_SAME_SIDE_A
+elseif 1_DIAGONAL_B
+elseif 1_FAR
+elseif 1_LINE_B
+elseif 2_C_B
+elseif 2_I
+elseif 2_DIAGONAL_B
+else
+create_land
+{ 
+    terrain_type                      PLAYER_LAND
+    number_of_tiles                   1
+    if HORIZONTAL
+    land_position                     rnd(80,85) rnd(15,25)
+    else
+    land_position                     rnd(15,25) rnd(80,85)
+    endif  
+                            
+    if AB
+    assign_to                         AT_TEAM 1 0 0       
+    elseif BA
+    assign_to                         AT_TEAM 2 0 0 
+    else
+    assign_to                         AT_TEAM -10 0 0 
+    endif   
+}
+endif
+if 1_CLOSE
+elseif 1_SAME_SIDE_B
+elseif 1_DIAGONAL_A
+elseif 1_FAR
+elseif 1_LINE_B
+elseif 2_C_B
+elseif 2_I
+elseif 2_DIAGONAL_A
+else
+create_land
+{ 
+    terrain_type                      PLAYER_LAND
+    number_of_tiles                   1
+    if HORIZONTAL
+    land_position                     rnd(15,20) rnd(15,25) 
+    else
+    land_position                     rnd(15,25) rnd(15,20)
+    endif                      
+    if AB
+    assign_to                         AT_TEAM 2 0 0       
+    elseif BA
+    assign_to                         AT_TEAM 1 0 0 
+    else
+    assign_to                         AT_TEAM -10 0 0 
+    endif   
+}
+endif
+
+<TERRAIN_GENERATION>
+
+create_terrain FOREST_BASE
+{
+  base_terrain  NO_BUILD
+  land_percent  100
+  number_of_clumps 50
+  clumping_factor 0
+  spacing_to_other_terrain_types 1
+}
+
+create_terrain MAIN_FOREST
+{
+  base_terrain  FOREST_BASE
+  land_percent  100
+  number_of_clumps 50
+  clumping_factor 0
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain POOL
+{
+  base_terrain  MAIN_FOREST
+  land_percent  100
+  number_of_clumps 500
+  clumping_factor 0
+  spacing_to_other_terrain_types 5
+}
+
+create_terrain POOL_PATCH
+{
+  set_scale_by_size
+  set_scale_by_groups
+  base_terrain  POOL
+  if TINY_MAP
+    number_of_tiles  220
+  elseif SMALL_MAP 
+    land_percent  3
+  else
+    land_percent  4
+  endif
+  number_of_clumps 16
+  clumping_factor 5
+  spacing_to_other_terrain_types 3
+}
+
+create_terrain EXTRA_RESOURCE_PATCH
+{
+  set_scale_by_size
+  set_scale_by_groups
+  base_terrain  EXTRA_RESOURCE
+  land_percent  1
+  number_of_clumps 2
+  clumping_factor 5
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain HOURGLASS_PATCH
+{      
+  base_terrain HOURGLASS
+  spacing_to_other_terrain_types    0
+  number_of_tiles                   240
+  number_of_clumps                  16
+  clumping_factor                   0
+  set_scale_by_size
+  set_scale_by_groups 
+}
+
+create_terrain SECONDARY_LAND_PATCH
+{      
+  base_terrain MAIN_LAND
+  spacing_to_other_terrain_types    0
+  number_of_tiles                   240
+  number_of_clumps                  16
+  clumping_factor                   0
+  set_scale_by_size
+  set_scale_by_groups 
+}
+<ELEVATION_GENERATION>
+create_elevation 4
+{
+  base_terrain MAIN_LAND
+  number_of_clumps 10
+  number_of_tiles 600
+  set_scale_by_groups
+  set_scale_by_size
+}
+
+<OBJECTS_GENERATION>
+
+create_object PALMTREE
+{
+number_of_objects 2
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 4
+max_distance_to_players 5
+min_distance_group_placement 2
+}
+
+create_object PALMTREE
+{
+number_of_objects 3
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 6
+max_distance_to_players 8
+min_distance_group_placement 2
+}
+
+create_object PALMTREE
+{
+number_of_objects 30
+set_gaia_object_only
+set_scaling_to_map_size
+min_distance_to_players 20
+}
+
+create_object TOWN_CENTER
+{
+set_place_for_every_player
+group_placement_radius 18
+min_distance_to_players 0
+max_distance_to_players 0
+}
+
+create_object VILLAGER
+{
+set_place_for_every_player
+min_distance_to_players 6
+max_distance_to_players 7
+}
+
+create_object SCOUT
+{
+number_of_objects 1
+set_place_for_every_player
+min_distance_to_players 8
+max_distance_to_players 9
+}
+
+if REGICIDE
+
+create_object VILLAGER
+{
+number_of_objects 7
+set_place_for_every_player
+min_distance_to_players 6
+max_distance_to_players 7
+}
+
+create_object KING
+{
+set_place_for_every_player
+min_distance_to_players 6
+max_distance_to_players 7
+}
+
+create_object CASTLE
+{
+set_place_for_every_player
+min_distance_to_players 10
+max_distance_to_players 11
+}
+
+endif
+
+create_object CATTLE
+{
+number_of_objects 4
+set_loose_grouping
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 9
+max_distance_to_players 10
+max_distance_to_other_zones 2
+/* terrain_to_place_on MAIN_LAND */
+}
+
+create_object CATTLE
+{
+number_of_objects 2
+number_of_groups  2
+set_loose_grouping
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 14
+max_distance_to_players 26
+min_distance_group_placement 3
+max_distance_to_other_zones 2
+/* terrain_to_place_on MAIN_LAND */
+}
+
+create_object HUNTABLE
+{
+number_of_objects 4
+group_placement_radius 3
+set_loose_grouping
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 18
+max_distance_to_players 23
+max_distance_to_other_zones 2
+/* terrain_to_place_on MAIN_LAND */
+}
+
+create_object LURABLE
+{
+number_of_objects 1
+set_loose_grouping
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 16
+max_distance_to_players 21
+min_distance_group_placement 3
+max_distance_to_other_zones 2
+/* terrain_to_place_on MAIN_LAND */
+}
+
+create_object LURABLE
+{
+number_of_objects 1
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 16
+max_distance_to_players 22
+min_distance_group_placement 3
+max_distance_to_other_zones 2
+/* terrain_to_place_on MAIN_LAND */
+}
+
+create_object BERRIES
+{
+number_of_objects 6
+group_placement_radius 3
+set_tight_grouping
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 10
+max_distance_to_players 13
+min_distance_group_placement 5
+max_distance_to_other_zones 2
+/* terrain_to_place_on MAIN_LAND */
+}
+
+create_object GOLD
+{
+number_of_objects 5
+group_placement_radius 3
+set_tight_grouping
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 13
+max_distance_to_players 16
+min_distance_group_placement 8
+max_distance_to_other_zones 2
+/* terrain_to_place_on MAIN_LAND */
+}
+
+create_object GOLD
+{
+number_of_objects 3
+group_placement_radius 3
+set_tight_grouping
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 19
+max_distance_to_players 22
+min_distance_group_placement 9
+max_distance_to_other_zones 2
+/* terrain_to_place_on MAIN_LAND */
+}
+
+create_object STONE
+{
+number_of_objects 4
+group_placement_radius 3
+set_tight_grouping
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 14
+max_distance_to_players 19
+min_distance_group_placement 8
+max_distance_to_other_zones 2
+/* terrain_to_place_on MAIN_LAND */
+}
+
+/* small third gold and second stone always in back */
+create_object GOLD
+{
+  terrain_to_place_on BACK_LINE
+  number_of_objects 3
+  group_placement_radius 3
+  set_tight_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players 14
+  if SMALL_MAP
+  max_distance_to_players 40
+  elseif TINY_MAP
+  max_distance_to_players 48
+  elseif MEDIUM_MAP
+  max_distance_to_players 56
+  elseif LARGE_MAP
+  max_distance_to_players 67
+  elseif HUGE_MAP
+  max_distance_to_players 74
+  elseif GIGANTIC_MAP
+  max_distance_to_players 80
+  elseif LUDIKRIS_MAP
+  max_distance_to_players 160
+  endif
+  min_distance_group_placement 2
+}
+
+create_object STONE
+{
+number_of_objects 2
+group_placement_radius 3
+set_tight_grouping
+set_gaia_object_only
+set_place_for_every_player
+min_distance_to_players 14
+if SMALL_MAP
+max_distance_to_players 40
+elseif TINY_MAP
+max_distance_to_players 48
+elseif MEDIUM_MAP
+max_distance_to_players 56
+elseif LARGE_MAP
+max_distance_to_players 67
+elseif HUGE_MAP
+max_distance_to_players 74
+elseif GIGANTIC_MAP
+max_distance_to_players 80
+elseif LUDIKRIS_MAP
+max_distance_to_players 160
+endif
+terrain_to_place_on BACK_LINE
+min_distance_group_placement 2
+}
+
+create_object FISH_A
+{
+    number_of_groups          24  
+    temp_min_distance_group_placement 4         
+    set_scaling_to_map_size
+}
+
+create_object RELIC
+{
+  terrain_to_place_on         POOL_PATCH
+  number_of_objects            5
+  min_distance_to_players     0
+  temp_min_distance_group_placement 5
+}
+
+
+create_object GOLD
+{
+  terrain_to_place_on         EXTRA_RESOURCE_PATCH
+  if TINY_MAP
+  number_of_objects           5
+  elseif SMALL_MAP
+  number_of_objects           6
+  elseif MEDIUM_MAP
+  number_of_objects           8
+  elseif LARGE_MAP
+  number_of_objects           10
+  else HUGE_MAP
+  number_of_objects           12
+  endif
+  number_of_groups            2
+  set_tight_grouping
+  min_distance_group_placement 2
+  temp_min_distance_group_placement 20
+}
+
+create_object STONE
+{
+  terrain_to_place_on         EXTRA_RESOURCE
+  if TINY_MAP
+  number_of_objects           3
+  elseif SMALL_MAP
+  number_of_objects           4
+  elseif MEDIUM_MAP
+  number_of_objects           6
+  elseif LARGE_MAP
+  number_of_objects           7
+  else HUGE_MAP
+  number_of_objects           9
+  endif
+  number_of_groups            2
+  set_tight_grouping
+  min_distance_group_placement 2
+  temp_min_distance_group_placement 20
+}
+
+create_object CATTLE
+{
+  terrain_to_place_on         EXTRA_RESOURCE
+
+if TINY_MAP
+  number_of_objects           2
+  min_distance_group_placement 0
+  elseif SMALL_MAP
+  number_of_objects           2
+  elseif MEDIUM_MAP
+  number_of_objects           2
+  elseif LARGE_MAP
+  number_of_objects           3
+  else HUGE_MAPs
+  number_of_objects           4
+  endif
+  number_of_groups            2
+  
+  temp_min_distance_group_placement 20
+  set_scaling_to_map_size 
+}
+
+create_object PREDATOR
+{
+  terrain_to_place_on         EXTRA_RESOURCE
+  number_of_objects           3
+  number_of_groups            2
+  min_distance_group_placement 2
+  temp_min_distance_group_placement 20 
+}
+
+if EYECANDY
+if DETAIL_A
+create_object DETAIL_A
+{
+  number_of_objects                 1
+  number_of_groups                  16
+  min_distance_to_players           8
+  set_scaling_to_map_size
+  terrain_to_place_on               MAIN_LAND
+  temp_min_distance_group_placement 24
+  max_distance_to_other_zones       12
+}
+endif
+
+if DETAIL_B
+create_object DETAIL_B
+{
+  number_of_objects                 1
+  number_of_groups                  14
+  min_distance_to_players           8
+  set_scaling_to_map_size
+  terrain_to_place_on               MAIN_LAND
+  temp_min_distance_group_placement 24
+  max_distance_to_other_zones       12
+}
+endif
+
+if DETAIL_C
+create_object DETAIL_C
+{
+  number_of_objects                 1
+  number_of_groups                  3
+  min_distance_to_players           8
+  set_scaling_to_map_size
+  terrain_to_place_on               MAIN_LAND
+  temp_min_distance_group_placement 24
+  max_distance_to_other_zones       12
+}
+endif
+
+if BIRDS
+create_object BIRD
+{
+  number_of_objects                 1
+  number_of_groups                  2
+  min_distance_to_players           8
+  set_scaling_to_map_size
+  terrain_to_place_on               MAIN_LAND
+  temp_min_distance_group_placement 24
+  max_distance_to_other_zones       12
+}
+endif
+endif

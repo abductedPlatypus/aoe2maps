@@ -1,0 +1,4273 @@
+/* ****************************** */
+/*             Frisia             */
+/* ****************************** */
+/*
+    Version 1.0, 2018-07-06
+    Version 1.1, 2018-07-07 - Reduced variation between starting TCs in team games.
+    Version 1.2, 2018-07-10 - Reduced no mans gold amount
+    Version 1.3, 2018-07-12 - Reduced gold vs stone vs tree placement fighting on Islands
+
+    Any comments, changes and suggestions welcomed at 
+    https://github.com/abductedPlatypus/aoe2maps
+    If you make any changes I'd love it if you let me know!
+
+    @abductypus (Twitter, preferred!)
+    abductedPlatypus (AoEZone, Reddit, Twitch)
+
+
+    This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.
+*/
+
+/* ********************************************** */
+
+/* Sling nerfs */
+#const TRIBUTE_INEFFICIENCY 46
+#const BANKING 17
+#const COINAGE 23
+#const COINAGE_IMP_DISABLER 224
+
+/* COMMENT TO HIDE */
+#define EYECANDY
+#define BIRDS
+/* #define NERF_SLING       */
+/* #define REPLACE_BERRIES  */
+/* #define SUMMER_VERSION   */
+/* #define WINTER_VERSION   */
+/* #define NO_DOCK_BLOCK    */
+/* #define YES_DOCK_BLOCK   */
+#define RELICS
+
+/* *************** */
+
+/* Runs HD ? */
+if 0_TEAM_GAME
+elseif 1_TEAM_GAME
+elseif 2_TEAM_GAME
+elseif 3_TEAM_GAME
+elseif 4_TEAM_GAME
+else
+  #define HD
+endif
+
+/* HD has issues with if statements and comments it seems, grassSad */
+/* So here's a list of comments */
+
+/*
+ * Use unique terrain IDs where possible to avoid 
+ * unwanted object creation and removing information
+ * (terrain can help with scouting) 
+ */
+
+/* 0    GRASS     */
+/* 12   GRASS2    */
+/* 9    GRASS3    */ 
+/* 3    DIRT3     */ 
+/* 11   DIRT2     */ 
+/* 1    WATER     */
+/* 10   OAK or 20 */
+/* 10   OAK or 20 */
+/* 349  OAKTREE   */
+
+/* 457      TUNA     */
+/* 61       DOLPHIN  */
+/* 126      WOLF     */
+/* 705      DLC_COW  */
+/* 594      Sheep    */
+/* 65       DEER     */
+/* 48       BOAR     */
+/* 59       BERRIES  */
+/* 859      Flowers  */
+/* 334      Flower   */
+/* 335      Bed 1    */
+/* 336      through  */
+/* 337      4        */
+/* 389      Sea Rock */
+/* 396      1 and 2  */
+/* 721      Shipwreck */
+
+/* 457      TUNA      */
+/* 61       DOLPHIN   */
+
+/* 303    Stork       */
+/* 96     Hawk        */
+/* 1028    Sea gulls  */
+/* 96      Hawk       */
+
+/* 26   ISLAND TEMP, Watery Ice */
+/* 34   GRASS SNOW              */
+/* 32   GRASS2                  */ 
+/* 33   DIRT SNOWY              */ 
+/* 32   SNOW                    */ 
+/* 1    WATER                   */
+/* 21   SNOW_FOREST             */
+/* 21   SNOW_FOREST             */
+/* 413  SNOWPINETREE            */
+/* 37   SNOWY BEACH             */
+
+/* *************** */
+/* VERY IMPORTANT  */
+/* Comment Trivia: */
+/* *************** */
+
+/* 
+  Tuna and Dolphin  are the only two possible 
+  fish in AoE2 that are found in Frisia, 11
+*/
+
+/* 
+  Wolves used to roam around in Frisia. 
+  A lot of world-wide common cow breeds 
+  originate from there too. 
+  Deer are still very common as are Boar
+*/
+
+ /*
+    Frisia was home to many bird types, even Flamingos (but I doubt people would believe me :<)
+ */
+
+ /* NO BERRIES during winter, instead some extra deer */
+ /* Frisians didn't like Franks */
+
+if SUMMER_VERSION
+elseif WINTER_VERSION
+else
+  start_random
+    percent_chance 50
+      #define WINTER_VERSION
+    percent_chance 50
+      #define SUMMER_VERSION
+  end_random
+endif
+
+/* ******* */
+/* Palette */
+/* ******* */
+
+/* Land Types */
+
+if HD
+  #const WADS                 59
+else
+  #const WADS                 4
+endif 
+
+if SUMMER_VERSION
+  #const ISLAND               0   
+  #const MAIN_LAND            12  
+  #const SECONDARY_LAND       9   
+  #const MAIN_LAND_PATCH      3   
+  #const SECONDARY_LAND_PATCH 27  
+  #const MAIN_WATER           1   
+  #const MAIN_FOREST          10 
+  #const SECONDARY_FOREST     10  
+  #const MAIN_STRAGGLER       349 
+
+  #const MAIN_FISH      457 
+  #const SHALLOW_FISH   61  
+
+  #const PREDATOR       126     
+
+  #const CATTLE       705     
+
+  #const HUNTABLE       65      
+  #const LURABLE        48      
+  #const BERRIES        59      
+  
+  #const LAND_PROP_1    859     
+  #const LAND_PROP_2    334     
+  #const LAND_PROP_3    335     
+  #const LAND_PROP_4    336     
+  #const LAND_PROP_5    337     
+
+  #const SEA_PROP_1     389     
+  #const SEA_PROP_2     396     
+  #const WAD_PROP       721     
+
+  #const BEACH_BIRD 303   
+
+  #const LAND_BIRD  1028  
+
+  if YES_DOCK_BLOCK
+  else
+    #define NO_DOCK_BLOCK
+  endif
+  
+elseif WINTER_VERSION
+  #const ISLAND               26  
+  #const MAIN_LAND            34  
+  #const SECONDARY_LAND       32  
+  #const MAIN_LAND_PATCH      36  
+  #const SECONDARY_LAND_PATCH 32  
+  #const MAIN_WATER           1   
+  #const MAIN_FOREST          21  
+  #const SECONDARY_FOREST     21  
+  #const MAIN_STRAGGLER       413 
+  #const WINTER_DETAIL1       37  
+
+  #define REPLACE_BERRIES
+
+  #const PREDATOR       126     
+
+  #const CATTLE       705     
+
+
+  #const HUNTABLE     65      
+  #const LURABLE      48      
+
+  #const SEA_PROP_1   728
+  #const SEA_PROP_2   721
+
+  #const WAD_PROP     728
+
+  #const MAIN_FISH        457 
+  #const SHALLOW_FISH     61  
+
+
+  #const BEACH_BIRD 303
+
+  #const LAND_BIRD 303
+
+
+  if NO_DOCK_BLOCK
+  else
+    #define YES_DOCK_BLOCK
+  endif
+endif
+
+
+
+/* Randoms */
+start_random
+  percent_chance 25
+    #define LEFT_GAP
+  percent_chance 25
+    #define TOP_GAP
+  percent_chance 25
+    #define BOTTOM_GAP
+  percent_chance 25
+    #define RIGHT_GAP
+end_random
+
+/* **************************************** */
+
+if HD
+  #define RANDOM
+elseif 2_PLAYER_GAME
+  #define DIRECT
+  #define 1V1
+elseif 3_PLAYER_GAME
+  if TEAM1_SIZE1
+    if TEAM2_SIZE1
+      if TEAM3_SIZE1
+          #define DIRECT
+          #define 1V1
+      endif
+    endif
+  endif
+  if 0_TEAM_GAME
+    #define DIRECT
+    #define 1V1V1    
+  endif
+elseif 4_PLAYER_GAME
+ if 2_TEAM_GAME
+  if TEAM1_SIZE2
+      if TEAM2_SIZE2
+        #define DIRECT
+        #define 2V2
+      endif
+    endif
+ endif
+elseif 5_PLAYER_GAME
+  #define RANDOM
+elseif 6_PLAYER_GAME
+  if 2_TEAM_GAME
+    if TEAM1_SIZE3
+      if TEAM2_SIZE3
+        #define DIRECT
+        #define 3V3
+      endif
+    endif
+  elseif 3_TEAM_GAME
+    if TEAM1_SIZE2
+      if TEAM2_SIZE2
+        if TEAM3_SIZE2
+          #define DIRECT
+          #define 2V2V2
+        endif
+      endif
+    endif
+  endif
+elseif 7_PLAYER_GAME
+  #define RANDOM
+elseif 8_PLAYER_GAME
+  if 2_TEAM_GAME
+    if TEAM1_SIZE4
+      if TEAM2_SIZE4
+        #define DIRECT
+        #define 4V4
+      endif
+    endif
+  endif
+endif 
+
+<PLAYER_SETUP>
+  if RANDOM
+    random_placement
+  elseif DIRECT
+    direct_placement
+  else 
+    #define RANDOM
+    random_placement
+  endif
+  ai_info_map_type  COASTAL 0 0 
+
+  if NERF_SLING
+  effect_percent MOD_RESOURCE TRIBUTE_INEFFICIENCY ATTR_SET 40
+  effect_amount DISABLE_TECH BANKING ATTR_DISABLE 17
+  effect_amount DISABLE_TECH COINAGE ATTR_DISABLE 23
+  effect_amount DISABLE_TECH COINAGE_IMP_DISABLER ATTR_DISABLE 224
+  endif
+
+<LAND_GENERATION>
+
+base_terrain                        WADS
+
+if RANDOM
+create_player_lands 
+{ 
+  terrain_type                      MAIN_LAND
+  land_percent                      52
+  base_size                         12
+if LEFT_GAP
+  left_border                       13
+  top_border                        13
+  bottom_border                     13
+  right_border                      -5
+elseif TOP_GAP
+  left_border                       13
+  top_border                        13
+  right_border                      13
+  bottom_border                     -5
+elseif BOTTOM_GAP
+  right_border                      13
+  left_border                       13
+  bottom_border                     17
+  top_border                        -5
+elseif RIGHT_GAP
+  right_border                      13
+  top_border                        13
+  bottom_border                     13
+  left_border                       -5
+endif
+  border_fuzziness                  15
+  zone                              set_zone_by_team
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance   5
+  else
+    other_zone_avoidance_distance   4
+  endif
+  clumping_factor                   15
+}
+
+else
+  if 1V1
+    create_land
+    { 
+      terrain_type                      MAIN_LAND
+      land_percent                      13
+      base_size                         12
+    if LEFT_GAP
+      left_border                       13
+      top_border                        13
+      bottom_border                     13
+      right_border                      -5
+      land_position                     100 50
+    elseif TOP_GAP
+      left_border                       13
+      top_border                        13
+      right_border                      13
+      bottom_border                     -5
+      land_position                     50 99
+    elseif BOTTOM_GAP
+      right_border                      13
+      left_border                       13
+      bottom_border                     17
+      top_border                        -5
+      land_position                     50 0
+    elseif RIGHT_GAP
+      right_border                      13
+      top_border                        13
+      bottom_border                     13
+      left_border                       -5
+      land_position                     0 50
+    endif
+      zone                              -1
+      if NO_DOCK_BLOCK
+        other_zone_avoidance_distance     5
+      else
+        other_zone_avoidance_distance     4
+      endif
+      border_fuzziness                  15
+      clumping_factor                   15
+    }
+
+    create_land
+    { 
+      terrain_type                      MAIN_LAND
+      land_percent                      19
+      base_size                         12
+    if LEFT_GAP
+      left_border                       13
+      top_border                        13
+      bottom_border                     13
+      right_border                      5
+      if HD
+      land_position                     35 23
+      else
+      land_position                     rnd(35,70) rnd(23,27)
+      endif
+    elseif TOP_GAP
+      left_border                       13
+      top_border                        13
+      right_border                      13
+      bottom_border                     5
+      if HD
+      land_position                     23 35
+      else
+      land_position                     rnd(23,27) rnd(35,70)
+      endif
+    elseif BOTTOM_GAP
+      right_border                      13
+      left_border                       13
+      bottom_border                     17
+      top_border                        5
+      if HD
+      land_position                     23 30
+      else
+      land_position                     rnd(23,27) rnd(30,65)
+      endif
+    elseif RIGHT_GAP
+      right_border                      13
+      top_border                        13
+      bottom_border                     13
+      left_border                       5
+      if HD
+      land_position                     30 23
+      else
+      land_position                     rnd(30,65) rnd(23,27)
+      endif
+    endif
+      assign_to                         AT_TEAM -10 0 0
+      zone                              0
+      if NO_DOCK_BLOCK
+        other_zone_avoidance_distance     5
+      else
+        other_zone_avoidance_distance     4
+      endif
+      border_fuzziness                  15
+      clumping_factor                   15
+    }
+
+    create_land
+    { 
+      terrain_type                      MAIN_LAND
+      land_percent                      19
+      base_size                         12
+    if LEFT_GAP
+      left_border                       13
+      top_border                        13
+      bottom_border                     13
+      right_border                      5
+      if HD
+      land_position                     35 73
+      else
+      land_position                     rnd(35,70) rnd(73,77)
+      endif
+    elseif TOP_GAP
+      left_border                       13
+      top_border                        13
+      right_border                      13
+      bottom_border                     5
+      if HD
+      land_position                     73 35
+      else
+      land_position                     rnd(73,77) rnd(35,80)
+      endif
+    elseif BOTTOM_GAP
+      right_border                      13
+      left_border                       13
+      bottom_border                     17
+      top_border                        5
+      if HD
+      land_position                     73 20
+      else
+      land_position                     rnd(73,77) rnd(20,65)
+      endif
+    elseif RIGHT_GAP
+      right_border                      13
+      top_border                        13
+      bottom_border                     13
+      left_border                       5
+      if HD
+      land_position                     20 73
+      else
+      land_position                     rnd(20,65) rnd(73,77)
+      endif
+    endif
+      assign_to                         AT_TEAM -10 0 0
+      if NO_DOCK_BLOCK
+        other_zone_avoidance_distance     5
+      else
+        other_zone_avoidance_distance     4
+      endif
+      border_fuzziness                  15
+      zone                              1
+      clumping_factor                   15
+    }
+    elseif 1V1V1
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      17
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      5
+        if HD
+        land_position                     30 23
+        else
+        land_position                     rnd(30,60) rnd(23,27)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     5
+        if HD
+        land_position                     23 30
+        else
+        land_position                     rnd(23,27) rnd(30,60)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        5
+        if HD
+        land_position                     23 40
+        else
+        land_position                     rnd(23,27) rnd(40,70)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       5
+        if HD
+        land_position                     40 23
+        else
+        land_position                     rnd(40,70) rnd(23,27)
+        endif
+      endif
+        assign_to                         AT_TEAM -10 0 0
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        border_fuzziness                  15
+        zone                              0
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      17
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     85 30
+        else
+        land_position                     rnd(85,95) rnd(30,70)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     30 85
+        else
+        land_position                     rnd(30,70) rnd(85,95)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     30 5
+        else
+        land_position                     rnd(30,70) rnd(5,15)
+        endif 
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     5 30
+        else
+        land_position                     rnd(5,15) rnd(30,70)
+        endif
+      endif
+        assign_to                         AT_TEAM -10 0 0
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        border_fuzziness                  15
+        zone                              1
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      18
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      5
+        if HD
+        land_position                     30 73
+        else
+        land_position                     rnd(30,60) rnd(73,77)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     5
+        if HD
+        land_position                     73 30
+        else
+        land_position                     rnd(73,77) rnd(30,60)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        5
+        if HD
+        land_position                     73 40
+        else
+        land_position                     rnd(73,77) rnd(40,70)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       5
+        if HD
+        land_position                     40 73
+        else
+        land_position                     rnd(40,70) rnd(73,77)
+        endif
+      endif
+      assign_to                         AT_TEAM -10 0 0
+      if NO_DOCK_BLOCK
+        other_zone_avoidance_distance     5
+      else
+        other_zone_avoidance_distance     4
+      endif
+      border_fuzziness                  15
+      zone                              2
+      clumping_factor                   15
+    }
+    elseif 2V2
+      start_random
+        percent_chance 50
+          #define 2V2A
+        percent_chance 50
+          #define 2V2B
+      end_random
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      13
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     35 20
+        else
+        land_position                     rnd(35,60) rnd(20,24)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     20 35
+        else
+        land_position                     rnd(20,24) rnd(35,60)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     20 40
+        else
+        land_position                     rnd(20,24) rnd(40,65)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     40 20
+        else
+        land_position                     rnd(40,65) rnd(20,24)
+        endif
+      endif
+      if 2V2A
+        assign_to                         AT_TEAM 1 0 0
+        zone                              -1
+      else
+        assign_to                         AT_TEAM 2 0 0
+        zone                              -2
+      endif
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        border_fuzziness                  15
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      13
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     65 20
+        else
+        land_position                     rnd(65,90) rnd(20,24)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     20 65
+        else
+        land_position                     rnd(20,24) rnd(65,90)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     20 10
+        else
+        land_position                     rnd(20,24) rnd(10,35)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     10 20
+        else
+        land_position                     rnd(10,35) rnd(20,24)
+        endif
+      endif
+      if 2V2A
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      else
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      13
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     35 76
+        else
+        land_position                     rnd(35,60) rnd(76,80)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     76 35
+        else
+        land_position                     rnd(76,80) rnd(35,60)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     76 40
+        else
+        land_position                     rnd(76,80) rnd(40,65)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     40 76
+        else
+        land_position                     rnd(40,65) rnd(76,80)
+        endif
+      endif
+      if 2V2A
+        assign_to                         AT_TEAM 2 0 0
+        zone                              -2
+      else
+        assign_to                         AT_TEAM 1 0 0
+        zone                              -1
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      13
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     65 76
+        else
+        land_position                     rnd(65,90) rnd(76,80)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     76 65
+        else
+        land_position                     rnd(76,80) rnd(65,90)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     76 10
+        else
+        land_position                     rnd(76,80) rnd(10,35)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     10 76
+        else  
+        land_position                     rnd(10,35) rnd(76,80)
+        endif
+      endif
+      if 2V2A
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      else
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+    elseif 2V2V2
+    start_random
+        percent_chance 17
+          #define 2V2V2A 
+        percent_chance 16
+          #define 2V2V2B 
+        percent_chance 17
+          #define 2V2V2C 
+        percent_chance 17
+          #define 2V2V2D 
+        percent_chance 16 
+          #define 2V2V2E 
+        percent_chance 17
+          #define 2V2V2F 
+      end_random
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      8
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     30 20
+        else
+        land_position                     rnd(30,45) rnd(20,24)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     20 30
+        else
+        land_position                     rnd(20,24) rnd(30,45)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     20 50
+        else
+        land_position                     rnd(20,24) rnd(55,70)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     50 20
+        else
+        land_position                     rnd(55,70) rnd(20,24)
+        endif
+      endif
+      if 2V2V2A
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      elseif 2V2V2B
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      elseif 2V2V2C
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      elseif 2V2V2D
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      elseif 2V2V2E
+        assign_to                         AT_TEAM 3 0 0
+        zone                              3
+      else
+        assign_to                         AT_TEAM 3 0 0
+        zone                              3
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      8
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     55 20
+        else
+        land_position                     rnd(60,75) rnd(20,24)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     20 55
+        else
+        land_position                     rnd(20,24) rnd(60,75)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     20 20
+        else
+        land_position                     rnd(20,24) rnd(25,40)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     20 20
+        else
+        land_position                     rnd(25,40) rnd(20,24)
+        endif
+      endif
+      if 2V2V2A
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      elseif 2V2V2B
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      elseif 2V2V2C
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      elseif 2V2V2D
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      elseif 2V2V2E
+        assign_to                         AT_TEAM 3 0 0
+        zone                              3
+      else
+        assign_to                         AT_TEAM 3 0 0
+        zone                              3
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      8
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     30 76
+        else
+        land_position                     rnd(30,45) rnd(76,80)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     76 30
+        else
+        land_position                     rnd(76,80) rnd(30,45)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     76 50
+        else
+        land_position                     rnd(76,80) rnd(55,70)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     50 76
+        else
+        land_position                     rnd(55,70) rnd(76,80)
+        endif
+      endif
+      if 2V2V2A
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      elseif 2V2V2B
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      elseif 2V2V2C
+        assign_to                         AT_TEAM 3 0 0
+        zone                              3
+      elseif 2V2V2D
+        assign_to                         AT_TEAM 3 0 0
+        zone                              3
+      elseif 2V2V2E
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      else
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      8
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     55 76
+        else
+        land_position                     rnd(60,75) rnd(76,80)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     76 55
+        else
+        land_position                     rnd(76,80) rnd(60,75)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     76 20
+        else
+        land_position                     rnd(76,80) rnd(25,40)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     20 76
+        else
+        land_position                     rnd(25,40) rnd(76,80)
+        endif
+      endif
+      if 2V2V2A
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      elseif 2V2V2B
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      elseif 2V2V2C
+        assign_to                         AT_TEAM 3 0 0
+        zone                              3
+      elseif 2V2V2D
+        assign_to                         AT_TEAM 3 0 0
+        zone                              3
+      elseif 2V2V2E
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      else
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      9
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     85 30
+        else
+        land_position                     rnd(85,93) rnd(30,45)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     30 85
+        else
+        land_position                     rnd(30,45) rnd(85,93)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     55 7
+        else
+        land_position                     rnd(55,70) rnd(7,15)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     7 30
+        else
+        land_position                     rnd(7,15) rnd(30,45)
+        endif
+      endif
+      if 2V2V2A
+        assign_to                         AT_TEAM 3 0 0
+        zone                              3
+      elseif 2V2V2B
+        assign_to                         AT_TEAM 3 0 0
+        zone                              3
+      elseif 2V2V2C
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      elseif 2V2V2D
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      elseif 2V2V2E
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      else
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      9
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     85 55
+        else
+        land_position                     rnd(85,93) rnd(55,70)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     55 85
+        else
+        land_position                     rnd(55,70) rnd(85,93)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     30 7
+        else
+        land_position                     rnd(30,45) rnd(7,15)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     7 55
+        else
+        land_position                     rnd(7,15) rnd(55,70)
+        endif
+      endif
+      if 2V2V2A
+        assign_to                         AT_TEAM 3 0 0
+        zone                              3
+      elseif 2V2V2B
+        assign_to                         AT_TEAM 3 0 0
+        zone                              3
+      elseif 2V2V2C
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      elseif 2V2V2D
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      elseif 2V2V2E
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      else
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+    elseif 3V3
+      start_random
+        percent_chance 50
+          #define 3V3A
+        percent_chance 50
+          #define 3V3B
+      end_random
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      8
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     30 20
+        else
+        land_position                     rnd(30,45) rnd(20,24)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     20 30
+        else
+        land_position                     rnd(20,24) rnd(30,45)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     20 50
+        else
+        land_position                     rnd(20,24) rnd(55,70)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     50 20
+        else
+        land_position                     rnd(55,70) rnd(20,24)
+        endif
+      endif
+      if 3V3A
+        assign_to                         AT_TEAM 1 0 0
+        zone                              -1
+      else
+        assign_to                         AT_TEAM 2 0 0
+        zone                              -2
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      8
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     55 20
+        else
+        land_position                     rnd(60,75) rnd(20,24)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     20 55
+        else
+        land_position                     rnd(20,24) rnd(60,75)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     20 20
+        else
+        land_position                     rnd(20,24) rnd(25,40)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     20 20
+        else
+        land_position                     rnd(25,40) rnd(20,24)
+        endif
+      endif
+      if 3V3A
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      else
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      endif
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        border_fuzziness                  15
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      9
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     85 30
+        else
+        land_position                     rnd(85,93) rnd(30,45)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     30 85
+        else
+        land_position                     rnd(30,45) rnd(85,93)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     30 7
+        else
+        land_position                     rnd(30,45) rnd(7,15)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     7 30
+        else
+        land_position                     rnd(7,15) rnd(30,45)
+        endif
+      endif
+      if 3V3A
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      else
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      endif
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        border_fuzziness                  15
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      8
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     30 76
+        else
+        land_position                     rnd(30,45) rnd(76,80)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     76 30
+        else
+        land_position                     rnd(76,80) rnd(30,45)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     76 50
+        else
+        land_position                     rnd(76,80) rnd(55,70)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     50 76
+        else
+        land_position                     rnd(55,70) rnd(76,80)
+        endif
+      endif
+      if 3V3A
+        assign_to                         AT_TEAM 2 0 0
+        zone                              -2
+      else
+        assign_to                         AT_TEAM 1 0 0
+        zone                              -1
+      endif
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        border_fuzziness                  15
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      8
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     55 76
+        else
+        land_position                     rnd(60,75) rnd(76,80)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     76 55
+        else
+        land_position                     rnd(76,80) rnd(60,75)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     76 20
+        else
+        land_position                     rnd(76,80) rnd(25,40)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     20 76
+        else
+        land_position                     rnd(25,40) rnd(76,80)
+        endif
+      endif
+      if 3V3A
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      else
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      endif
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        border_fuzziness                  15
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      9
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     85 55
+        else
+        land_position                     rnd(85,93) rnd(55,70)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     55 85
+        else
+        land_position                     rnd(55,70) rnd(85,93)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     55 7
+        else
+        land_position                     rnd(55,70) rnd(7,15)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     7 55
+        else
+        land_position                     rnd(7,15) rnd(55,70)
+        endif
+      endif
+      if 3V3A
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      else
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      endif
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        border_fuzziness                  15
+        clumping_factor                   15
+      }
+    elseif 4V4
+      start_random
+        percent_chance 50
+          #define 4V4A
+        percent_chance 50
+          #define 4V4B
+      end_random
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      6
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     32 20
+        else
+        land_position                     rnd(32,44) rnd(20,24)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     20 32
+        else
+        land_position                     rnd(20,24) rnd(32,44)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     20 52
+        else
+        land_position                     rnd(20,24) rnd(56,68)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     52 20
+        else
+        land_position                     rnd(56,68) rnd(20,24)
+        endif
+      endif
+      if 4V4A
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      else
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      6
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     57 20
+        else
+        land_position                     rnd(60,72) rnd(20,24)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     20 57
+        else
+        land_position                     rnd(20,24) rnd(60,72)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     20 22
+        else
+        land_position                     rnd(20,24) rnd(28,40)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     22 20
+        else
+        land_position                     rnd(28,40) rnd(20,24)
+        endif
+      endif
+      if 4V4A
+        assign_to                         AT_TEAM 1 0 0
+        zone                              -1
+      else
+        assign_to                         AT_TEAM 2 0 0
+        zone                              -2
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      7
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     87 30
+        else
+        land_position                     rnd(87,93) rnd(30,43)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     30 87
+        else
+        land_position                     rnd(30,43) rnd(87,93)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     30 7
+        else
+        land_position                     rnd(30,43) rnd(7,13)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     7 30
+        else
+        land_position                     rnd(7,13) rnd(30,43)
+        endif
+      endif
+      if 4V4A
+        assign_to                         AT_TEAM 1 0 0
+        zone                              -1
+      else
+        assign_to                         AT_TEAM 2 0 0
+        zone                              -2
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      7
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     18 30
+        else
+        land_position                     rnd(18,23) rnd(30,43)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     30 18
+        else
+        land_position                     rnd(30,43) rnd(18,23)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     30 77
+        else
+        land_position                     rnd(30,43) rnd(77,82)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     77 30
+        else
+        land_position                     rnd(77,82) rnd(30,43)
+        endif
+      endif
+      if 4V4A
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      else
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      6
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     32 76
+        else
+        land_position                     rnd(32,44) rnd(76,80)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     76 32
+        else
+        land_position                     rnd(76,80) rnd(32,44)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     76 52
+        else
+        land_position                     rnd(76,80) rnd(56,68)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     52 76
+        else
+        land_position                     rnd(56,68) rnd(76,80)
+        endif
+      endif
+      if 4V4A
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      else
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      6
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     57 76
+        else
+        land_position                     rnd(60,72) rnd(76,80)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     76 57
+        else
+        land_position                     rnd(76,80) rnd(60,72)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     76 22
+        else
+        land_position                     rnd(76,80) rnd(28,40)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     22 76
+        else
+        land_position                     rnd(28,40) rnd(76,80)
+        endif
+      endif
+      if 4V4A
+        assign_to                         AT_TEAM 2 0 0
+        zone                              -2
+      else
+        assign_to                         AT_TEAM 1 0 0
+        zone                              -1
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      7
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     87 57
+        else
+        land_position                     rnd(87,93) rnd(57,70)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     57 87
+        else
+        land_position                     rnd(57,70) rnd(87,93)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     57 7
+        else
+        land_position                     rnd(57,70) rnd(7,13)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     7 57
+        else
+        land_position                     rnd(7,13) rnd(57,70)
+        endif
+      endif
+      if 4V4A
+        assign_to                         AT_TEAM 2 0 0
+        zone                              -2
+      else
+        assign_to                         AT_TEAM 1 0 0
+        zone                              -1
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+      create_land
+      { 
+        terrain_type                      MAIN_LAND
+        land_percent                      7
+        base_size                         12
+      if LEFT_GAP
+        left_border                       13
+        top_border                        13
+        bottom_border                     13
+        right_border                      -5
+        if HD
+        land_position                     18 57
+        else
+        land_position                     rnd(18,23) rnd(57,70)
+        endif
+      elseif TOP_GAP
+        left_border                       13
+        top_border                        13
+        right_border                      13
+        bottom_border                     -5
+        if HD
+        land_position                     57 18
+        else
+        land_position                     rnd(57,70) rnd(18,23)
+        endif
+      elseif BOTTOM_GAP
+        right_border                      13
+        left_border                       13
+        bottom_border                     17
+        top_border                        -5
+        if HD
+        land_position                     57 77
+        else
+        land_position                     rnd(57,70) rnd(77,82)
+        endif
+      elseif RIGHT_GAP
+        right_border                      13
+        top_border                        13
+        bottom_border                     13
+        left_border                       -5
+        if HD
+        land_position                     77 57
+        else
+        land_position                     rnd(77,82) rnd(57,70)
+        endif
+      endif
+      if 4V4A
+        assign_to                         AT_TEAM 2 0 0
+        zone                              2
+      else
+        assign_to                         AT_TEAM 1 0 0
+        zone                              1
+      endif
+        border_fuzziness                  15
+        if NO_DOCK_BLOCK
+          other_zone_avoidance_distance     5
+        else
+          other_zone_avoidance_distance     4
+        endif
+        clumping_factor                   15
+      }
+      endif
+endif
+
+if LARGE_MAP 
+#define ISLANDS_LEFT
+#define ISLANDS_MID
+#define ISLANDS_RIGHTRIGHT
+elseif GIGANTIC_MAP
+#define ISLANDS_LEFTLEFT
+#define ISLANDS_LEFT
+#define ISLANDS_MID
+#define ISLANDS_RIGHT
+#define ISLANDS_RIGHTRIGHT
+elseif HUGE_MAP
+#define ISLANDS_LEFTLEFT
+#define ISLANDS_LEFT
+#define ISLANDS_RIGHT
+#define ISLANDS_RIGHTRIGHT
+elseif MEDIUM_MAP
+#define ISLANDS_LEFT
+#define ISLANDS_RIGHTRIGHT
+elseif LUDIKRIS_MAP
+#define ISLANDS_LEFTLEFT
+#define ISLANDS_LEFT
+#define ISLANDS_MID
+#define ISLANDS_RIGHT
+#define ISLANDS_RIGHTRIGHT
+elseif TINY_MAP
+#define ISLANDS_MID
+elseif SMALL_MAP
+#define ISLANDS_MID
+else
+#define ISLANDS_LEFTLEFT
+#define ISLANDS_LEFT
+#define ISLANDS_RIGHT
+#define ISLANDS_RIGHTRIGHT
+endif
+
+if ISLANDS_MID
+create_land
+{
+  terrain_type                      ISLAND
+  if LEFT_GAP
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 40
+      else
+      land_position                 rnd(2,8) rnd(40,60)
+      endif
+  elseif TOP_GAP
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 40 2
+      else
+      land_position                 rnd(40,60) rnd(2,8)
+      endif
+  elseif BOTTOM_GAP
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 40 92
+      else
+      land_position                 rnd(40,60) rnd(92,98)
+      endif
+  elseif RIGHT_GAP
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 40
+      else
+      land_position                 rnd(92,98) rnd(40,60)
+      endif
+  endif
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              30
+  land_id                           30
+}
+
+ 
+create_land
+{
+  terrain_type                      ISLAND
+  
+  if LEFT_GAP
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 40 2
+      else
+      land_position                 rnd(40,60) rnd(2,8)
+      endif
+  elseif TOP_GAP
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 40
+      else
+      land_position                 rnd(92,98) rnd(40,60)
+      endif
+  elseif BOTTOM_GAP
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 40
+      else
+      land_position                 rnd(2,8) rnd(40,60)
+      endif
+  elseif RIGHT_GAP
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 40 92
+      else
+      land_position                 rnd(40,60) rnd(92,98)
+      endif
+  endif
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              31
+  land_id                           31
+} 
+
+
+create_land
+{
+  terrain_type                      ISLAND
+  
+  if LEFT_GAP   
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 40 92
+      else
+      land_position                 rnd(40,60) rnd(92,98)
+      endif
+  elseif TOP_GAP    
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 40
+      else
+      land_position                 rnd(2,8) rnd(40,60)
+      endif
+  elseif BOTTOM_GAP   
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 40
+      else
+      land_position                 rnd(92,98) rnd(40,60)
+      endif
+  elseif RIGHT_GAP    
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 40 2
+      else
+      land_position                 rnd(40,60) rnd(2,8)
+      endif
+  endif   
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              32
+  land_id                           32
+} 
+endif
+
+if ISLANDS_LEFT
+create_land
+{
+  terrain_type                      ISLAND
+  if LEFT_GAP
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 25
+      else
+      land_position                 rnd(2,8) rnd(25,40)
+      endif  
+  elseif TOP_GAP
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 25 2
+      else
+      land_position                 rnd(25,40) rnd(2,8)
+      endif
+  elseif BOTTOM_GAP
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 25 92
+      else
+      land_position                 rnd(25,40) rnd(92,98)
+      endif
+  elseif RIGHT_GAP
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 25
+      else
+      land_position                 rnd(92,98) rnd(25,40)
+      endif 
+  endif
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              33
+  land_id                           33
+}
+
+ 
+create_land
+{
+  terrain_type                      ISLAND
+  
+  if LEFT_GAP
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 25 2
+      else
+      land_position                 rnd(25,40) rnd(2,8)
+      endif
+  elseif TOP_GAP
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 25
+      else
+      land_position                 rnd(92,98) rnd(25,40)
+      endif   
+  elseif BOTTOM_GAP
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 25
+      else
+      land_position                 rnd(2,8) rnd(25,40)
+      endif  
+  elseif RIGHT_GAP
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 25 92
+      else
+      land_position                 rnd(25,40) rnd(92,98)
+      endif
+  endif
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              34
+  land_id                           34
+} 
+
+
+create_land
+{
+  terrain_type                      ISLAND
+  
+  if LEFT_GAP   
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 25 92
+      else
+      land_position                 rnd(25,40) rnd(92,98)
+      endif
+  elseif TOP_GAP    
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 25
+      else
+      land_position                 rnd(2,8) rnd(25,40)
+      endif  
+  elseif BOTTOM_GAP   
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 25
+      else
+      land_position                 rnd(92,98) rnd(25,40)
+      endif  
+  elseif RIGHT_GAP    
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 25 2
+      else
+      land_position                 rnd(25,40) rnd(2,8)
+      endif
+  endif   
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              35
+  land_id                           35
+} 
+endif
+
+if ISLANDS_LEFTLEFT
+create_land
+{
+  terrain_type                      ISLAND
+  if LEFT_GAP
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 15
+      else
+      land_position                 rnd(2,8) rnd(15,25)
+      endif  
+  elseif TOP_GAP
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 15 2
+      else
+      land_position                 rnd(15,25) rnd(2,8)
+      endif
+  elseif BOTTOM_GAP
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 15 92
+      else
+      land_position                 rnd(15,25) rnd(92,98)
+      endif
+  elseif RIGHT_GAP
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 15
+      else
+      land_position                 rnd(92,98) rnd(15,25)
+      endif 
+  endif
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              36
+  land_id                           36
+}
+
+ 
+create_land
+{
+  terrain_type                      ISLAND
+  
+  if LEFT_GAP
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 15 2
+      else
+      land_position                 rnd(15,25) rnd(2,8)
+      endif
+  elseif TOP_GAP
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 15
+      else
+      land_position                 rnd(92,98) rnd(15,25)
+      endif   
+  elseif BOTTOM_GAP
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 15
+      else
+      land_position                 rnd(2,8) rnd(15,25)
+      endif  
+  elseif RIGHT_GAP
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 15 92
+      else
+      land_position                 rnd(15,25) rnd(92,98)
+      endif
+  endif
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              37
+  land_id                           37
+} 
+
+
+create_land
+{
+  terrain_type                      ISLAND
+  
+  if LEFT_GAP   
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 15 92
+      else
+      land_position                 rnd(15,25) rnd(92,98)
+      endif
+  elseif TOP_GAP    
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 15
+      else
+      land_position                 rnd(2,8) rnd(15,25)
+      endif  
+  elseif BOTTOM_GAP   
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 15
+      else
+      land_position                 rnd(92,98) rnd(15,25)
+      endif  
+  elseif RIGHT_GAP    
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 15 2
+      else
+      land_position                 rnd(15,25) rnd(2,8)
+      endif
+  endif   
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              38
+  land_id                           38
+} 
+endif
+
+if ISLANDS_RIGHT
+create_land
+{
+  terrain_type                      ISLAND
+  if LEFT_GAP
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 60
+      else
+      land_position                 rnd(2,8) rnd(60,75)
+      endif  
+  elseif TOP_GAP
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 60 2
+      else
+      land_position                 rnd(60,75) rnd(2,8)
+      endif
+  elseif BOTTOM_GAP
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 60 92
+      else
+      land_position                 rnd(60,75) rnd(92,98)
+      endif
+  elseif RIGHT_GAP
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 60
+      else
+      land_position                 rnd(92,98) rnd(60,75)
+      endif  
+  endif
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              39
+  land_id                           39
+}
+
+ 
+create_land
+{
+  terrain_type                      ISLAND
+  
+  if LEFT_GAP
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 60 2
+      else
+      land_position                 rnd(60,75) rnd(2,8)
+      endif
+  elseif TOP_GAP
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 60
+      else
+      land_position                 rnd(92,98) rnd(60,75)
+      endif   
+  elseif BOTTOM_GAP
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 60
+      else
+      land_position                 rnd(2,8) rnd(60,75)
+      endif  
+  elseif RIGHT_GAP
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 60 92
+      else
+      land_position                 rnd(60,75) rnd(92,98)
+      endif
+  endif
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              40
+  land_id                           40
+} 
+
+
+create_land
+{
+  terrain_type                      ISLAND
+  
+  if LEFT_GAP   
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 60 92
+      else
+      land_position                 rnd(60,75) rnd(92,98)
+      endif
+  elseif TOP_GAP    
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 60
+      else
+      land_position                 rnd(2,8) rnd(60,75)
+      endif  
+  elseif BOTTOM_GAP   
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 60
+      else
+      land_position                 rnd(92,98) rnd(60,75)
+      endif 
+  elseif RIGHT_GAP    
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 60 2
+      else
+      land_position                 rnd(60,75) rnd(2,8)
+      endif
+  endif   
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              41
+  land_id                           41
+} 
+endif
+
+if ISLANDS_RIGHTRIGHT
+create_land
+{
+  terrain_type                      ISLAND
+  if LEFT_GAP
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 75
+      else
+      land_position                 rnd(2,8) rnd(75,85)
+      endif  
+  elseif TOP_GAP
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 75 2
+      else
+      land_position                 rnd(75,85) rnd(2,8)
+      endif
+  elseif BOTTOM_GAP
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 75 92
+      else
+      land_position                 rnd(75,85) rnd(92,98)
+      endif
+  elseif RIGHT_GAP
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 75
+      else
+      land_position                 rnd(92,98) rnd(75,85)
+      endif  
+  endif
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              42
+  land_id                           42
+}
+
+ 
+create_land
+{
+  terrain_type                      ISLAND
+  
+  if LEFT_GAP
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 75 2
+      else
+      land_position                 rnd(75,85) rnd(2,8)
+      endif
+  elseif TOP_GAP
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 75
+      else
+      land_position                 rnd(92,98) rnd(75,85)
+      endif   
+  elseif BOTTOM_GAP
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 75
+      else
+      land_position                 rnd(2,8) rnd(75,85)
+      endif  
+  elseif RIGHT_GAP
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 75 92
+      else
+      land_position                 rnd(75,85) rnd(92,98)
+      endif
+  endif
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              43
+  land_id                           43
+} 
+
+
+create_land
+{
+  terrain_type                      ISLAND
+  
+  if LEFT_GAP   
+      bottom_border                 0
+      top_border                    89
+      if HD
+      land_position                 75 92
+      else
+      land_position                 rnd(75,85) rnd(92,98)
+      endif
+  elseif TOP_GAP    
+      left_border                   0
+      right_border                  89
+      if HD
+      land_position                 2 75
+      else
+      land_position                 rnd(2,8) rnd(75,85)
+      endif  
+  elseif BOTTOM_GAP   
+      right_border                  0
+      left_border                   89
+      if HD
+      land_position                 92 75
+      else
+      land_position                 rnd(92,98) rnd(75,85)
+      endif  
+  elseif RIGHT_GAP    
+      top_border                    0
+      bottom_border                 89
+      if HD
+      land_position                 75 2
+      else
+      land_position                 rnd(75,85) rnd(2,8)
+      endif
+  endif   
+  clumping_factor                   15
+  border_fuzziness                  100
+  if NO_DOCK_BLOCK
+    other_zone_avoidance_distance     5
+  else
+    other_zone_avoidance_distance     4
+  endif
+  if HD
+  number_of_tiles                   150
+  else
+  number_of_tiles                   rnd(150,250)
+  endif
+  zone                              44
+  land_id                           44
+} 
+endif
+
+<ELEVATION_GENERATION>
+create_elevation        1
+{  
+  base_terrain          MAIN_LAND
+  number_of_clumps      20
+  number_of_tiles       1500
+  set_scale_by_groups
+  set_scale_by_size           
+}
+
+<TERRAIN_GENERATION>
+
+create_terrain MAIN_FOREST
+{
+  base_terrain                      MAIN_LAND
+  spacing_to_other_terrain_types    5
+  number_of_tiles                   700
+  number_of_clumps                  8
+  set_avoid_player_start_areas     
+  set_scale_by_size
+  set_scale_by_groups
+}
+
+create_terrain MAIN_WATER
+{
+  base_terrain                      WADS
+  spacing_to_other_terrain_types    2 
+  if TINY_MAP
+    number_of_tiles             1800
+    number_of_clumps            18
+  elseif SMALL_MAP
+    number_of_tiles             3200
+    number_of_clumps            32
+  elseif MEDIUM_MAP
+    number_of_tiles             4800
+    number_of_clumps            48
+  elseif LARGE_MAP
+    number_of_tiles             7000
+    number_of_clumps            60
+  elseif HUGE_MAP
+    number_of_tiles             8200
+    number_of_clumps            70
+  elseif GIGANTIC_MAP
+    number_of_tiles             10000
+    number_of_clumps            120
+  elseif LUDIKRIS_MAP
+    number_of_tiles             25000
+    number_of_clumps            250
+  else
+    number_of_tiles             1800
+    number_of_clumps            18
+  endif
+}
+
+if WINTER_VERSION
+create_terrain WINTER_DETAIL1
+{
+  base_terrain                      MAIN_WATER
+  spacing_to_other_terrain_types    2 
+  if TINY_MAP
+    number_of_tiles             90
+    number_of_clumps            18
+  elseif SMALL_MAP
+    number_of_tiles             160
+    number_of_clumps            32
+  elseif MEDIUM_MAP
+    number_of_tiles             240
+    number_of_clumps            48
+  elseif LARGE_MAP
+    number_of_tiles             400
+    number_of_clumps            80
+  elseif HUGE_MAP
+    number_of_tiles             625
+    number_of_clumps            125
+  elseif GIGANTIC_MAP
+    number_of_tiles             800
+    number_of_clumps            160
+  elseif LUDIKRIS_MAP
+    number_of_tiles             1250
+    number_of_clumps            250
+  else
+    number_of_tiles             90
+    number_of_clumps            18
+  endif
+}
+endif
+
+/* EYE CANDY */
+create_terrain SECONDARY_LAND
+{      
+  base_terrain MAIN_LAND
+  spacing_to_other_terrain_types    0
+  number_of_tiles                   700
+  number_of_clumps                  21
+  set_scale_by_size
+  set_scale_by_groups 
+}
+
+create_terrain MAIN_LAND_PATCH
+{      
+  base_terrain MAIN_LAND
+  spacing_to_other_terrain_types    0
+  number_of_tiles                   580
+  number_of_clumps                  21
+  clumping_factor                  -100
+  set_scale_by_size
+  set_scale_by_groups 
+}
+
+create_terrain SECONDARY_LAND_PATCH
+{      
+  base_terrain MAIN_LAND
+  spacing_to_other_terrain_types    0
+  number_of_tiles                   340
+  number_of_clumps                  21
+  clumping_factor                   0
+  set_scale_by_size
+  set_scale_by_groups 
+}
+
+/* Island Terrain Candy */
+
+create_terrain MAIN_FOREST
+{      
+  base_terrain ISLAND
+  spacing_to_other_terrain_types    4
+  number_of_tiles                   16
+  number_of_clumps                  16
+  clumping_factor                   99
+  set_scale_by_groups
+  set_scale_by_size 
+}
+
+create_terrain SECONDARY_LAND_PATCH
+{      
+  base_terrain ISLAND
+  spacing_to_other_terrain_types    0
+  number_of_tiles                   100
+  number_of_clumps                  16
+  clumping_factor                   0
+  set_scale_by_groups
+  set_scale_by_size 
+}
+
+<CONNECTION_GENERATION>
+/* Make sure there is a walkable path between all players */
+create_connect_all_players_land
+{
+  replace_terrain MAIN_WATER            MAIN_LAND
+  replace_terrain MAIN_FOREST           MAIN_LAND
+  replace_terrain SECONDARY_FOREST      MAIN_LAND
+  terrain_cost    MAIN_WATER            2
+  terrain_cost    MAIN_LAND             2
+  terrain_cost    SECONDARY_LAND        2
+  terrain_cost    MAIN_LAND_PATCH       2
+  terrain_cost    SECONDARY_LAND_PATCH  2
+  terrain_cost    MAIN_FOREST           7
+  terrain_cost    SECONDARY_FOREST      7
+  terrain_size    MAIN_WATER            2   0
+  terrain_size    MAIN_FOREST           2   0
+  terrain_size    SECONDARY_FOREST      2   0
+}
+
+create_connect_all_lands 
+{
+  replace_terrain MAIN_WATER            WADS
+  replace_terrain WADS                  WADS
+  
+  replace_terrain MAIN_LAND             MAIN_LAND
+  
+  terrain_cost    MAIN_WATER            15
+  terrain_cost    WADS                  1
+  terrain_cost    MAIN_LAND             1
+}
+
+
+/* This replaces the island texture everywhere                     */
+/* This fixes island trees appearing everywhere                    */
+/* There doesn't seem to be a place terrain in zone                */
+/* It's a duplicate function, so this works great for this purpose */
+
+create_connect_same_land_zones 
+{
+  if WINTER_VERSION
+    replace_terrain ISLAND                MAIN_LAND
+
+    terrain_size    MAIN_WATER            3    2 
+    terrain_size    WADS                  3    2 
+    terrain_size    MAIN_LAND             3    2 
+    terrain_size    ISLAND                2000 0 
+                                                 
+  endif
+}
+
+<OBJECTS_GENERATION>
+
+create_object TOWN_CENTER
+{
+  set_place_for_every_player
+  group_placement_radius        18
+  min_distance_to_players       0
+  max_distance_to_players       0
+}
+
+create_object VILLAGER
+{
+  set_place_for_every_player
+  min_distance_to_players       6
+  max_distance_to_players       6
+}
+
+create_object SCOUT
+{
+  number_of_objects             1
+  set_place_for_every_player
+  min_distance_to_players       7
+  max_distance_to_players       9
+}
+
+if REGICIDE
+create_object VILLAGER
+{
+  number_of_objects             7
+  set_place_for_every_player
+  min_distance_to_players       6
+  max_distance_to_players       6
+}
+
+create_object KING
+{
+  set_place_for_every_player
+  min_distance_to_players       6
+  max_distance_to_players       6
+}
+
+create_object CASTLE
+{
+  set_place_for_every_player
+  min_distance_to_players       10
+  max_distance_to_players       10
+}
+
+endif
+
+/* NEAR FORAGE */
+
+if REPLACE_BERRIES
+create_object HUNTABLE
+{
+  number_of_objects                 4
+  group_placement_radius            3
+  set_loose_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players           6
+  max_distance_to_players           10
+}
+else
+create_object BERRIES
+{
+  number_of_objects             6
+  group_placement_radius        3
+  set_tight_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       10
+  max_distance_to_players       12
+  min_distance_group_placement  6
+}
+
+endif
+create_object LURABLE
+{
+  number_of_objects             1
+  number_of_groups              2
+  set_loose_grouping  
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       15
+  max_distance_to_players       18
+}
+
+/* Near Stragglers */
+
+create_object MAIN_STRAGGLER
+{
+  number_of_objects             2
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       4
+  max_distance_to_players       5
+  min_distance_group_placement  2
+}
+create_object MAIN_STRAGGLER
+{
+  number_of_objects             2
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       6
+  max_distance_to_players       8
+  min_distance_group_placement  2
+}
+
+/* Predators */
+
+create_object PREDATOR
+{
+  number_of_groups              3
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           1
+  percent_chance 25
+	number_of_objects           2
+  end_random
+  set_scaling_to_map_size
+  set_gaia_object_only
+  min_distance_group_placement  12
+  min_distance_to_players       40
+  max_distance_to_players       120
+  terrain_to_place_on           MAIN_LAND    
+}
+
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     30    
+}
+
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     31    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     32    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     33    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     34    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     35    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     36    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     37    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     38    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     39    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     40    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     41    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     42    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     43    
+}
+create_object PREDATOR
+{
+  set_loose_grouping
+  start_random
+  percent_chance 75
+	number_of_objects           2
+  percent_chance 25
+	number_of_objects           3
+  end_random
+  set_gaia_object_only
+  place_on_specific_land_id     44    
+}
+/* NEAR GOLD */
+
+create_object GOLD
+{
+  number_of_objects             4
+  group_placement_radius        3
+  set_tight_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       12
+  max_distance_to_players       16
+  min_distance_group_placement  7
+  max_distance_to_other_zones   7
+}
+
+/* MEDIUM GOLD */
+
+create_object GOLD
+{
+  number_of_objects             3
+  group_placement_radius        3
+  set_tight_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       16
+  max_distance_to_players       20
+  min_distance_group_placement  7
+  max_distance_to_other_zones   7
+}
+
+create_object STONE
+{
+  number_of_objects             3
+  group_placement_radius        2  
+  set_tight_grouping 
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       14
+  max_distance_to_players       18
+  min_distance_group_placement  7
+  max_distance_to_other_zones   7
+}
+
+create_object STONE
+{
+  number_of_objects                 3
+  group_placement_radius            2  
+  set_tight_grouping 
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players           18
+  max_distance_to_players           22
+  min_distance_group_placement      7
+  max_distance_to_other_zones       7
+}
+
+create_object HUNTABLE
+{
+  number_of_objects                 4
+  group_placement_radius            3
+  set_loose_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players           14
+  max_distance_to_players           22
+}
+create_object CATTLE
+{
+   number_of_objects                4
+   set_loose_grouping
+   set_gaia_object_only
+   set_place_for_every_player
+   min_distance_to_players          8
+   max_distance_to_players          12
+   
+} 
+
+create_object CATTLE
+{
+   number_of_objects                2
+   set_loose_grouping
+   set_gaia_object_only
+   set_place_for_every_player
+   min_distance_to_players          18
+   max_distance_to_players          24
+}
+
+create_object CATTLE
+{
+   number_of_objects                2
+   set_loose_grouping
+   set_gaia_object_only
+   set_place_for_every_player
+   min_distance_to_players          18
+   max_distance_to_players          24
+}
+
+create_object MAIN_FISH
+{
+  number_of_objects                 35
+  set_scaling_to_map_size
+  set_gaia_object_only
+  max_distance_to_other_zones       4
+  min_distance_group_placement      4
+}
+create_object SHALLOW_FISH
+{
+  number_of_objects                 22
+  set_scaling_to_map_size
+  set_gaia_object_only
+  max_distance_to_other_zones       4
+  min_distance_group_placement      8
+  terrain_to_place_on               WADS
+} 
+
+create_object MAIN_STRAGGLER
+{
+  number_of_objects          30
+  set_gaia_object_only
+  set_scaling_to_map_size
+  min_distance_to_players    8
+}
+
+/* Make no mans land more interesting, 
+should also make maps more fair if a player 
+is in a bad water position */
+create_object GOLD
+{
+  number_of_objects          3
+  number_of_groups           1  
+  set_gaia_object_only
+  min_distance_to_players    22
+  set_tight_grouping
+  temp_min_distance_group_placement 17
+  set_scaling_to_map_size
+}
+
+create_object STONE
+{
+  number_of_objects          3 
+  number_of_groups           1 
+  set_gaia_object_only
+  min_distance_to_players    22 
+  temp_min_distance_group_placement 17
+  set_scaling_to_map_size
+  set_tight_grouping
+}
+
+/* EYE CANDY */
+
+if EYECANDY
+if LAND_PROP_1
+create_object LAND_PROP_1
+{
+  number_of_objects                 1
+  number_of_groups                  6
+  min_distance_to_players           8
+  set_scaling_to_map_size
+  terrain_to_place_on               MAIN_LAND
+  temp_min_distance_group_placement 24
+  max_distance_to_other_zones       12
+}
+endif
+if LAND_PROP_2
+create_object LAND_PROP_2
+{
+  number_of_objects                 1
+  number_of_groups                  1
+  min_distance_to_players           8
+  set_scaling_to_map_size
+  terrain_to_place_on               MAIN_LAND
+  temp_min_distance_group_placement 24
+  max_distance_to_other_zones       12
+
+}
+endif
+if LAND_PROP_3
+create_object LAND_PROP_3
+{
+  number_of_objects                 1
+  number_of_groups                  1
+  min_distance_to_players           8
+  set_scaling_to_map_size
+  terrain_to_place_on               MAIN_LAND
+  temp_min_distance_group_placement 24
+  max_distance_to_other_zones       12
+}
+endif
+
+if LAND_PROP_4
+create_object LAND_PROP_4
+{
+  number_of_objects                 1
+  number_of_groups                  1
+  min_distance_to_players           8
+  set_scaling_to_map_size
+  terrain_to_place_on               MAIN_LAND
+  temp_min_distance_group_placement 24
+  max_distance_to_other_zones       12
+}
+endif 
+
+if LAND_PROP_5
+create_object LAND_PROP_5
+{
+  number_of_objects                 1
+  number_of_groups                  1
+  min_distance_to_players           8
+  set_scaling_to_map_size
+  terrain_to_place_on               MAIN_LAND
+  temp_min_distance_group_placement 24
+  max_distance_to_other_zones       12
+}
+endif
+
+if WAD_PROP
+create_object WAD_PROP
+{
+  number_of_objects                 1
+  number_of_groups                  4 
+  set_gaia_object_only
+  set_scaling_to_map_size
+  terrain_to_place_on               WADS
+  temp_min_distance_group_placement 24
+}
+endif
+
+if SEA_PROP_1
+create_object SEA_PROP_1
+{
+  number_of_objects                 1
+  number_of_groups                  14 
+  set_gaia_object_only
+  set_scaling_to_map_size
+  terrain_to_place_on               MAIN_WATER
+  temp_min_distance_group_placement 24
+}
+endif
+
+if SEA_PROP_2
+create_object SEA_PROP_2
+{
+  number_of_objects                 1
+  number_of_groups                  14 
+  set_gaia_object_only
+  set_scaling_to_map_size
+  terrain_to_place_on               MAIN_WATER
+  temp_min_distance_group_placement 24
+}
+endif
+endif 
+
+/* Birds */
+
+if BIRDS
+if BEACH_BIRD
+create_object BEACH_BIRD
+{
+  number_of_objects                 1
+  number_of_groups                  2 
+  set_gaia_object_only
+  set_scaling_to_map_size
+  terrain_to_place_on               WADS
+  temp_min_distance_group_placement 8
+}
+endif
+if LAND_BIRD
+create_object LAND_BIRD
+{
+  number_of_objects                 1
+  number_of_groups                  2 /* == NUM ISLANDS/2 == 2 + 3 * NPLAYERS */
+  set_gaia_object_only
+  set_scaling_to_map_size
+  terrain_to_place_on               MAIN_LAND
+  temp_min_distance_group_placement 8
+}
+endif
+endif 
+
+/* Relics */
+
+if RELICS
+  if LUDIKRIS_MAP
+  create_object RELIC
+  {
+    number_of_objects            250
+    min_distance_to_players     25
+    temp_min_distance_group_placement 110
+  }
+  else
+  create_object RELIC
+  {
+    number_of_objects            5
+    min_distance_to_players     25
+    temp_min_distance_group_placement 20
+  }
+  endif
+endif
+
+/* ISLAND GOLD */
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     30
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     31
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     32
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     33
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     34
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     35
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     36
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     37
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     38
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     39
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     40
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     41
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     42
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     43
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object GOLD
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     44
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+
+/* ISLAND STONE */
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     30
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     31
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     32
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     33
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     34
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     35
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     36
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     37
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     38
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     39
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     40
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     41
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     42
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     43
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
+
+create_object STONE
+{
+  number_of_objects             5
+  group_variance                1
+  place_on_specific_land_id     44
+  set_gaia_object_only
+  min_distance_to_players       8
+  set_tight_grouping
+  min_distance_group_placement  4
+}
