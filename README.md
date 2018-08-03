@@ -12,7 +12,9 @@ If you renamed the files from `AwesomeMap.rms` to `AwesomeMap.rms2` they should 
 
 ## Included Maps
 
-### ZR@Frisia
+### ZR@Frisia  
+<img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Frisia1v1.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Frisia1v1.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Frisia2v2.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Frisia2v2.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Frisia3v3.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Frisia3v3.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Frisia4v4.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Frisia4v4.png" width="150" height="75" />
+
 This coastal area, spanning current day Dutch and German coasts, is surrounded by islands connected to land by shallow wads.
 These small islands contain resources that will quickly become scarce on the mainland.
 If early agressive strategies fail, the game will see sea brawls with both naval and ground units
@@ -21,8 +23,9 @@ During winters rivers suspiciously become exactly as wide as two docks and the l
 
 The islands are small and can easily be reached with upgraded War Galleys. However they do make for good towerable water choke points.
 
-Dolphins? Yes, many roamed the Frisian seas!
+Dolphins? Yes, many roamed the Frisian seas!  
 
+  
 **Starting Resources:** 8 Cows, 6 Berry bushes (summer) or 4 Deer (winter), 4 Deer (always), 2 Boar, 7 Gold, 6 Stone, Fish, Enough Wood to conquer the entire North Sea.
 **Extra Resources:** 5 Relics, little extra Gold and Stone on land, a lot of extra Gold and Stone on Islands.
 
@@ -41,7 +44,9 @@ A classical historic Britons vs Franks situation arises.
 **Technical Details:** Custom Red desert textures.
 
 
-### ZR@Hourglass (No HD)
+### ZR@Hourglass (No HD)  
+<img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass1v1.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass1v1.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass2v2.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass2v2.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass3v3.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass3v3.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass4v4.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass4v4.png" width="150" height="75" />
+
 The first Hourglasses can be traced back to Babylon, in the Middle-East. The map is designed in a Hourglass shape. A big choke point in the center of the map. In addition to this main unwallable choke, there are two extra chokes on the middle borders of the map, where a lot of extra resources are centered. Around the Hourglass are two oases, both surrounded by a thin woodline, allowing you to dock, and control half of the fish, relics and a quarter of the wood on the map. Due to the layout of the map the forward player and both flanks can expect early attacks. A 4th team member is rather save though. In 1v1s you will have to scout which oasis your opponent is taking, and act accordingly.
 
 Time is running out, get your priorities straight.
@@ -51,7 +56,9 @@ Time is running out, get your priorities straight.
 
 **Technical Details:** direct_placement forcing teams in an aggressive formation. Quicksand texture (AK)
 
-### ZR@Scattered
+### ZR@Scattered  
+<img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Scattered1v1.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Scattered1v1.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Scattered2v2.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Scattered2v2.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Scattered3v3.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Scattered3v3.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Scattered4v4.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Scattered4v4.png" width="150" height="75" />
+
 A game designer's attempt at a Baobab "Nothing" map, but turned out to be a highly technical map.
 On this map forests, gold and stone are scattered so placing your camps will take some getting used to. Even Farms will be hard to place due to the lack of space.
 The forest will force you to place buildings quite far from your TC. Luckily there is plenty of food and even some extra elephants that can be lured to your TC with your scout.
@@ -64,7 +71,9 @@ Make sure your micro isn't rusty.
 
 **Technical Details:** Some AK textures.
 
-### ZR@Ridge
+### ZR@Ridge  
+<img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Ridge1v1.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Ridge1v1.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Ridge2v2.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Ridge2v2.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Ridge3v3.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Ridge3v3.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Ridge4v4.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Ridge4v4.png" width="150" height="75" />
+
 For centuries the border between India and China is being disputed. The Himalayas have been an interesting obstacle due to its inhospitable nature. Even these two mighty civilisations could not conquer it. This map will give you a shot at doing so. It's gonna be hard, but if you manage to move the frontline over it, you'll have the advantage. It's easy to know you made it: You will notice the climate change when you managed to cross the Ridge, into dry China or wet India.
 
 Good luck protecting you trade.
@@ -75,7 +84,9 @@ Good luck protecting you trade.
 **Technical Details:** Jungle Grass and Recoloured cliff texture.
 
 
-## ZR@Marooned
+## ZR@Marooned  
+<img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Marooned1v1.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Marooned1v1.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Marooned2v2.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Marooned2v2.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Marooned3v3.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Marooned3v3.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Marooned4v4.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Marooned4v4.png" width="150" height="75" />
+
 During wars over the many islands found in the Pacific, often crews of rivalling nations would find themselves on the same island. They tried to keep stay alive on tropic islands, while keeping an eye on the enemy. 
 You start with a very tiny palisade fort, with some outposts. All your resources are in the back. Your task is to wall off access to islands in the back, from both sea and land, so you can utilise them while fending off your bad neighbours.
 
