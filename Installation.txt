@@ -1,0 +1,7 @@
+HD: Copy the files in the HD folder to your C:\Program Files\Steam\steamapps\common\Age2HD\resources\_common\random-map-script folder, or similar
+WololoKingdoms: Copy the files (but not the HD folder) to your C:\Program Files\Steam\steamapps\common\Age2HD\Games\WololoKingdoms\Script.Rm folder, or similar
+
+Note: Most maps required all DLCs. (I think for HD you can still use them without them online, with a limited Civ pool)
+
+Made by abductedPlatypus
+Downloaded from https://github.com/abductedPlatypus/aoe2maps/releases
