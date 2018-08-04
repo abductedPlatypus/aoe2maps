@@ -38,7 +38,7 @@ A classical historic Britons vs Franks situation arises.
 **Technical Details:** Custom Red desert textures.
 
 
-### ZR@Hourglass (No HD)  
+### ZR@Hourglass (in HD as Custom Map)  
 <img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass1v1.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass1v1.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass2v2.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass2v2.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass3v3.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass3v3.png" width="150" height="75" /><img src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass4v4.png" data-canonical-src="https://github.com/abductedPlatypus/aoe2maps/raw/master/Images/Hourglass4v4.png" width="150" height="75" />
 
 The first Hourglasses can be traced back to Babylon, in the Middle-East. The map is designed in a Hourglass shape. A big choke point in the center of the map. In addition to this main unwallable choke, there are two extra chokes on the middle borders of the map, where a lot of extra resources are centered. Around the Hourglass are two oases, both surrounded by a thin woodline, allowing you to dock, and control half of the fish, relics and a quarter of the wood on the map. Due to the layout of the map the forward player and both flanks can expect early attacks. A 4th team member is rather save though. In 1v1s you will have to scout which oasis your opponent is taking, and act accordingly.
@@ -98,4 +98,4 @@ If you want to modify the maps you will have to (optionally) repack them with 7z
 
 ## HD Compatibility
 
-If you renamed the files from `AwesomeMap.rms` to `AwesomeMap.rms2` they should work in HD too. It will however lack textures and in some cases have weird player placement. Hourglass does not work in HD.
+If you renamed the files from `AwesomeMap.rms` to `AwesomeMap.rms2` they should work in HD too. It will however lack textures and in some cases have weird player placement. Hourglass is implemented as Custom Map for HD.
